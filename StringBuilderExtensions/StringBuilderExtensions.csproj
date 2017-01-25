@@ -106,11 +106,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Contracts">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft\Contracts\Contracts\Silverlight\v4.0\Profile\WindowsPhone\Microsoft.Contracts.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="StringBuilderExtensions.StringBuilder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
