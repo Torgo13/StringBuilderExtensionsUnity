@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Globalization;
+
 namespace System.Text.Tests
-{
-    [TestClass()]
+{    
     public class EndsWithTests
     {
         private static readonly string correctStringToSearch = string.Concat(TestStrings.Composition1, TestStrings.Searched, TestStrings.Composition2, TestStrings.Searched);
@@ -16,7 +16,7 @@ namespace System.Text.Tests
         private static readonly string incorrectStringToSearch2 = string.Concat(TestStrings.Composition1, TestStrings.Composition2);
         private static readonly string smallStringToSearch = TestStrings.Composition1;
 
-        [TestMethod()]
+        [Test]
         public void TestContainingCharacters()
         {
             StringBuilder sb;
@@ -26,7 +26,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.EndsWith(TestStrings.Searched), correctStringToSearch.EndsWith(TestStrings.Searched));
         }
 
-        [TestMethod()]
+        [Test]
         public void TestContainingCharactersIgnoreCase()
         {
             StringBuilder sb;
@@ -36,7 +36,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.EndsWith(TestStrings.Searched, true), correctStringToSearch.EndsWith(TestStrings.Searched, true, CultureInfo.CurrentCulture));
         }
 
-        [TestMethod]
+        [Test]
         public void TestNotContainingCharacters()
         {
             StringBuilder sb;
@@ -46,7 +46,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.EndsWith(TestStrings.Searched), incorrectStringToSearch2.EndsWith(TestStrings.Searched));
         }
 
-        [TestMethod]
+        [Test]
         public void TestNotContainingCharactersIgnoreCase()
         {
             StringBuilder sb;
@@ -56,29 +56,35 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.EndsWith(TestStrings.Searched, true), incorrectStringToSearch2.EndsWith(TestStrings.Searched, true, CultureInfo.CurrentCulture));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void TestNullValue()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.EndsWith(null);
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.EndsWith(null);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentNullException>(ex);
+            }
         }
 
-        [TestMethod]
+        [Test]
         public void TestEmptyValue()
         {
             StringBuilder sb = new StringBuilder();
             Assert.IsTrue(sb.EndsWith(string.Empty));
         }
 
-        [TestMethod]
+        [Test]
         public void TestValueLengthGreaterThanStringBuilderLength()
         {
             StringBuilder sb = new StringBuilder(smallStringToSearch);
             Assert.AreEqual(sb.EndsWith(TestStrings.Searched), smallStringToSearch.EndsWith(TestStrings.Searched));
         }
 
-        [TestMethod]
+        [Test]
         public void TestEmpty()
         {
             StringBuilder sb = new StringBuilder();

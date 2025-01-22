@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+
 namespace System.Text.Tests
 {
-    [TestClass()]
     public class LastIndexOfStringTests
     {
         private static readonly string correctStringToSearch1 = string.Concat(TestStrings.Composition1, TestStrings.Searched, TestStrings.Composition2, TestStrings.Searched);
@@ -20,7 +20,7 @@ namespace System.Text.Tests
         private static readonly int startIndexCorrectString2 = correctStringToSearch2.Length - 4;
         private static readonly int startIndexIncorrectString = incorrectStringToSearch.Length - 4;
 
-        [TestMethod()]
+        [Test]
         public void TestContainingCharacters()
         {
             StringBuilder sb;
@@ -36,7 +36,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.LastIndexOf(TestStrings.Searched, startIndexCorrectString2, count), correctStringToSearch2.LastIndexOf(TestStrings.Searched, startIndexCorrectString2, count));
         }
 
-        [TestMethod()]
+        [Test]
         public void TestContainingCharactersIgnoreCase()
         {
             StringBuilder sb;
@@ -52,7 +52,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.LastIndexOf(TestStrings.Searched, startIndexCorrectString2, count, true), correctStringToSearchUpperCase2.LastIndexOf(TestStrings.Searched, startIndexCorrectString2, count, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        [TestMethod]
+        [Test]
         public void TestNotContainingCharacters()
         {
             StringBuilder sb;
@@ -64,7 +64,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.LastIndexOf(TestStrings.Searched, startIndexIncorrectString, 32), incorrectStringToSearch.LastIndexOf(TestStrings.Searched, startIndexIncorrectString, 32));
         }
 
-        [TestMethod]
+        [Test]
         public void TestNotContainingCharactersIgnoreCase()
         {
             string testStringsSearchedToUpper = TestStrings.Searched.ToUpper();
@@ -78,31 +78,49 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.LastIndexOf(testStringsSearchedToUpper, startIndexIncorrectString, 32, true), incorrectStringToSearch.LastIndexOf(testStringsSearchedToUpper, startIndexIncorrectString, 32, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void TestNullValue()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.LastIndexOf(null);
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.LastIndexOf(null);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentNullException>(ex);
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void TestNullValueWithIndex()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.LastIndexOf(null, startIndexCorrectString1);
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.LastIndexOf(null, startIndexCorrectString1);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentNullException>(ex);
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void TestNullValueWithIndexAndCount()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.LastIndexOf(null, startIndexCorrectString1, 55);
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.LastIndexOf(null, startIndexCorrectString1, 55);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentNullException>(ex);
+            }
         }
 
-        [TestMethod]
+        [Test]
         public void TestEmptyValue()
         {
             StringBuilder sb;
@@ -115,23 +133,35 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.LastIndexOf(string.Empty, startIndexCorrectString1, 55), correctStringToSearch1.LastIndexOf(string.Empty, startIndexCorrectString1, 55));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestEmptyValueEmptyStringBuilderIndex()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.LastIndexOf(string.Empty, startIndexCorrectString1);
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.LastIndexOf(string.Empty, startIndexCorrectString1);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestEmptyValueEmptyStringBuilderIndexAndCount()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.LastIndexOf(string.Empty, startIndexCorrectString1, 55);
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.LastIndexOf(string.Empty, startIndexCorrectString1, 55);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod]
+        [Test]
         public void TestValueLengthGreaterThanStringBuilderLengthContaining()
         {
             int startIndex = correctSmallStringToSearch.Length - 4;
@@ -141,7 +171,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.LastIndexOf(TestStrings.Searched, startIndex, 12), correctSmallStringToSearch.LastIndexOf(TestStrings.Searched, startIndex, 12));
         }
 
-        [TestMethod]
+        [Test]
         public void TestValueLengthGreaterThanStringBuilderLengthNotContaining()
         {
             int startIndex = incorrectSmallStringToSearch.Length - 4;
@@ -151,7 +181,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.LastIndexOf(TestStrings.Searched, startIndex, 12), incorrectSmallStringToSearch.LastIndexOf(TestStrings.Searched, startIndex, 12));
         }
 
-        [TestMethod]
+        [Test]
         public void TestEmptyStringBuilder()
         {
             StringBuilder sb = new StringBuilder();
@@ -160,23 +190,35 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.LastIndexOf(TestStrings.Searched, 0, 55), string.Empty.LastIndexOf(TestStrings.Searched, 0, 55));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestEmptyStringBuilderIndex()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.LastIndexOf(TestStrings.Searched, startIndexCorrectString1);
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.LastIndexOf(TestStrings.Searched, startIndexCorrectString1);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestEmptyStringBuilderIndexWithCount()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.LastIndexOf(TestStrings.Searched, startIndexCorrectString1, 55);
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.LastIndexOf(TestStrings.Searched, startIndexCorrectString1, 55);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod]
+        [Test]
         public void TestIndexFirstCharacter()
         {
             StringBuilder sb;
@@ -186,84 +228,144 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.LastIndexOf(TestStrings.Searched, 0), correctStringToSearch1.LastIndexOf(TestStrings.Searched, 0));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestIndexAfterLastCharacter()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.ToIndexOfChars1);
-            sb.LastIndexOf(TestStrings.Searched, sb.Length);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.ToIndexOfChars1);
+                sb.LastIndexOf(TestStrings.Searched, sb.Length);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestIndexAfterLastCharacterWithCount()
         {
-            StringBuilder sb = new StringBuilder(correctStringToSearch1);
-            sb.LastIndexOf(TestStrings.Searched, sb.Length);
+            try
+            {
+                StringBuilder sb = new StringBuilder(correctStringToSearch1);
+                sb.LastIndexOf(TestStrings.Searched, sb.Length);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestIndexLessThanZero()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-            sb.LastIndexOf(TestStrings.Searched, -1);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                sb.LastIndexOf(TestStrings.Searched, -1);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestIndexLessThanZeroWithCount()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-            sb.LastIndexOf(TestStrings.Searched, -1, 5);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                sb.LastIndexOf(TestStrings.Searched, -1, 5);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestIndexGreaterThanMaximum()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-            sb.LastIndexOf(TestStrings.Searched, sb.Length + 1);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                sb.LastIndexOf(TestStrings.Searched, sb.Length + 1);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestIndexGreaterThanMaximumWithCount()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-            sb.LastIndexOf(TestStrings.Searched, sb.Length + 1, 5);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                sb.LastIndexOf(TestStrings.Searched, sb.Length + 1, 5);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestCountLessThanZero()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-            sb.LastIndexOf(TestStrings.Searched, 0, -1);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                sb.LastIndexOf(TestStrings.Searched, 0, -1);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestCountEqualsZero()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-            sb.LastIndexOf(TestStrings.Searched, -1);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                sb.LastIndexOf(TestStrings.Searched, -1);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestCountGreaterThanMaximum()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-            sb.LastIndexOf(TestStrings.Searched, 0, sb.Length + 1);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                sb.LastIndexOf(TestStrings.Searched, 0, sb.Length + 1);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestIndexPlusCountGreaterThanLength()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-            sb.LastIndexOf(TestStrings.Searched, 5, 20);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                sb.LastIndexOf(TestStrings.Searched, 5, 20);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
     }
 }

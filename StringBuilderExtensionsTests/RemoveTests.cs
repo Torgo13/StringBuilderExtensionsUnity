@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+
 namespace System.Text.Tests
-{
-    [TestClass()]
+{    
     public class RemoveTests
     {
-        [TestMethod()]
+        [Test]
         public void TestContainingCharacters()
         {
             StringBuilder sb;
@@ -19,7 +19,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.ToString(), TestStrings.SymbolsRemoved);
         }
 
-        [TestMethod]
+        [Test]
         public void TestNotContainingCharacters()
         {
             StringBuilder sb;
@@ -29,54 +29,72 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingSymbols);
         }
 
-        [TestMethod]
+        [Test]
         public void TestByStartIndex()
         {
             StringBuilder sb = new StringBuilder(TestStrings.Composition1 + TestStrings.Composition2).Remove(TestStrings.Composition1.Length);
             Assert.AreEqual(sb.ToString(), TestStrings.Composition1);
         }
 
-        [TestMethod]
+        [Test]
         public void TestEmpty()
         {
             StringBuilder sb = new StringBuilder().Remove(' ');
             Assert.AreEqual(sb.ToString(), string.Empty);
         }
 
-        [TestMethod]
+        [Test]
         public void TestRemoveAllCharacters()
         {
             StringBuilder sb = new StringBuilder(TestStrings.Composition1).Remove(0);
             Assert.AreEqual(sb.ToString(), string.Empty);
         }
 
-        [TestMethod]
+        [Test]
         public void TestRemoveLastCharacter()
         {
             StringBuilder sb = new StringBuilder(TestStrings.Composition1).Remove(TestStrings.Composition1.Length - 1);
             Assert.AreEqual(sb.ToString(), TestStrings.Composition1.Substring(0, TestStrings.Composition1.Length - 1));
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestIndexLessThanZero()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1).Remove(-1);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1).Remove(-1);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void TestIndexGreaterThanMaximum()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-            sb.Remove(sb.Length);
+            try
+            {
+                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                sb.Remove(sb.Length);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void TestNullRemoveChars()
         {
-            StringBuilder sb = new StringBuilder().Remove(null);
+            try
+            {
+                StringBuilder sb = new StringBuilder().Remove(null);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsAssignableFrom<ArgumentNullException>(ex);
+            }
         }
     }
 }

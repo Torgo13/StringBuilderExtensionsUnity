@@ -1,0 +1,15 @@
+{
+  "name": "com.xperiandri.stringbuilderextensions",
+  "version": "1.0.0",
+  "displayName": "String Builder Extensions",
+  "description": "String Builder Extensions is a set of extension methods for System.Text.StringBuilder that provide the same functionality as corresponding methods of System.String.",
+  "documentationUrl": "https://github.com/Torgo13/StringBuilderExtensionsUnity/blob/master/readme.md",
+  "unity": "2021.3",
+  "unityRelease": "0f1",
+  "author": "xperiandri",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Torgo13/StringBuilderExtensionsUnity"
+  }
+}

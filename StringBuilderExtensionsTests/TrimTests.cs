@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace System.Text.Tests
-{
-    [TestClass()]
+{    
     public class TrimTests
     {
-        [TestMethod()]
+        [Test]
         public void TestContainingWhiteSpaces()
         {
             StringBuilder sb;
@@ -22,7 +21,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingWhiteSpaces.Trim());
         }
 
-        [TestMethod()]
+        [Test]
         public void TestContainingWhiteSpacesNullTrimChars()
         {
             StringBuilder sb;
@@ -34,7 +33,7 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingWhiteSpaces.Trim(null));
         }
 
-        [TestMethod()]
+        [Test]
         public void TestContainingWhiteSpacesEmptyTrimChars()
         {
             StringBuilder sb;
@@ -46,14 +45,14 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingWhiteSpaces.Trim(new char[] { }));
         }
 
-        [TestMethod]
+        [Test]
         public void TestNotContainingWhiteSpaces()
         {
             StringBuilder sb = new StringBuilder(TestStrings.WhiteSpacesTrimmed).Trim();
             Assert.AreEqual(sb.ToString(), TestStrings.WhiteSpacesTrimmed);
         }
         
-        [TestMethod()]
+        [Test]
         public void TestContainingCharacters()
         {
             StringBuilder sb;
@@ -65,21 +64,21 @@ namespace System.Text.Tests
             Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingSymbols.Trim(TestStrings.SymbolsToTrim));
         }
 
-        [TestMethod]
+        [Test]
         public void TestNotContainingCharacters()
         {
             StringBuilder sb = new StringBuilder(TestStrings.SymbolsTrimmed).Trim(TestStrings.SymbolsToTrim);
             Assert.AreEqual(sb.ToString(), TestStrings.SymbolsTrimmed);
         }
 
-        [TestMethod]
+        [Test]
         public void TestEmpty()
         {
             StringBuilder sb = new StringBuilder(string.Empty).Trim();
             Assert.AreEqual(sb.ToString(), string.Empty);
         }
 
-        [TestMethod]
+        [Test]
         public void TrimWhiteSpaces()
         {
             StringBuilder sb = new StringBuilder(TestStrings.WhiteSpaces).Trim();
