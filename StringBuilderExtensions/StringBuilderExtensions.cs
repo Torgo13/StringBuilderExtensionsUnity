@@ -46,7 +46,7 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Removes all occurences of specified characters from <see cref="System.Text.StringBuilder"/>.
+        /// Removes all occurrences of specified characters from <see cref="System.Text.StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to remove from.</param>
         /// <param name="removeChars">A Unicode characters to remove.</param>
@@ -61,7 +61,7 @@ namespace System.Text
             if (removeChars == null)
                 throw new ArgumentNullException(nameof(removeChars));
             var sbLength = sb.Length;
-            for (int i = 0; i < sb.Length; )
+            for (int i = 0; i < sb.Length;)
             {
                 if (removeChars.Any(sb[i]))
                     sb.Remove(i, 1);
@@ -98,11 +98,6 @@ namespace System.Text
             return sb;
         }
 
-        private static bool IsBOMWhitespace(char c)
-        {
-            return false;
-        }
-
         private static StringBuilder TrimHelper(this StringBuilder sb, int trimType)
         {
             int end = sb.Length - 1;
@@ -112,7 +107,7 @@ namespace System.Text
                 start = 0;
                 while (start < sb.Length)
                 {
-                    if (!char.IsWhiteSpace(sb[start]) && !IsBOMWhitespace(sb[start]))
+                    if (!char.IsWhiteSpace(sb[start]))
                     {
                         break;
                     }
@@ -124,7 +119,7 @@ namespace System.Text
                 end = sb.Length - 1;
                 while (end >= start)
                 {
-                    if (!char.IsWhiteSpace(sb[end]) && !IsBOMWhitespace(sb[start]))
+                    if (!char.IsWhiteSpace(sb[end]))
                     {
                         break;
                     }
@@ -547,7 +542,6 @@ namespace System.Text
             if (anyOf == null)
                 throw new ArgumentNullException(nameof(anyOf));
 
-
             return sb.IndexOfAny(anyOf, 0, sb.Length);
         }
 
@@ -577,7 +571,6 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (sb.Length != 0 && startIndex >= sb.Length)
                 throw new ArgumentOutOfRangeException();
-
 
             return sb.IndexOfAny(anyOf, startIndex, sb.Length - startIndex);
         }
@@ -709,7 +702,6 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (sb.Length != 0 && startIndex - count + 1 < 0)
                 throw new ArgumentOutOfRangeException();
-
 
             if (sb.Length == 0 || count == 0)
                 return -1;
@@ -914,6 +906,7 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (sb.Length != 0 && startIndex >= sb.Length)
                 throw new ArgumentOutOfRangeException();
+
             return sb.LastIndexOfAny(anyOf, startIndex, startIndex + 1);
         }
 
@@ -1094,7 +1087,7 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Returns a <see cref="System.Text.StringBuilder"/> converted to lowercase, using the casing rules of the invarian culture.
+        /// Returns a <see cref="System.Text.StringBuilder"/> converted to lowercase, using the casing rules of the invariant culture.
         /// </summary>
         /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to convert to lowercase.</param>
         /// <returns>The <see cref="System.Text.StringBuilder"/> converted to lowercase using invariant culture.</returns>
