@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace System.Text.Tests
 {
+    [TestFixture]
     public class IndexOfCharTests
     {
         [Test]
@@ -93,141 +89,111 @@ namespace System.Text.Tests
         [Test]
         public void TestIndexAfterLastCharacter()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.ToIndexOfChars1);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], sb.Length);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestIndexAfterLastCharacterWithCount()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.ToIndexOfChars2);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], sb.Length);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestIndexLessThanZero()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], -1);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestIndexLessThanZeroWithCount()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], -1, 5);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestIndexGreaterThanMaximum()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], sb.Length + 1);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestIndexGreaterThanMaximumWithCount()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], sb.Length + 1, 5);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestCountLessThanZero()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], 0, -1);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestCountEqualsZero()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], -1);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestCountGreaterThanMaximum()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], 0, sb.Length + 1);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestIndexPlusCountGreaterThanLength()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1);
                 sb.IndexOf(TestStrings.SymbolsToTrim[0], 5, 20);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
     }
 }

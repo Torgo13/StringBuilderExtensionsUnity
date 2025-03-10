@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Globalization;
 
 namespace System.Text.Tests
-{    
+{
+    [TestFixture]
     public class EndsWithTests
     {
         private static readonly string correctStringToSearch = string.Concat(TestStrings.Composition1, TestStrings.Searched, TestStrings.Composition2, TestStrings.Searched);
@@ -59,15 +55,12 @@ namespace System.Text.Tests
         [Test]
         public void TestNullValue()
         {
-            try
+            Assert.Throws<ArgumentNullException>(() =>
             {
                 StringBuilder sb = new StringBuilder();
                 sb.EndsWith(null);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentNullException>(ex);
-            }
+            );
         }
 
         [Test]

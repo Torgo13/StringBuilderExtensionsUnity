@@ -22,37 +22,29 @@
 // THE SOFTWARE.
 #endregion License
 
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Resources;
-using System.Text;
 
 namespace System.Text
 {
-    static class Contract
+    public static class StringBuilderExtensions
     {
-        public static void Ensures(bool b)
+        /// <summary>
+        /// Replacement for <see cref="System.Linq.Any"/>
+        /// </summary>
+        /// <param name="chars">Array of chars.</param>
+        /// <param name="c">Char to search for.</param>
+        /// <returns>True if char c is present in chars.</returns>
+        static bool Any(this char[] chars, char c)
         {
-            return;
-            //if (!b)
-            //    throw new Exception();
+            foreach (char ch in chars)
+            {
+                if (ch == c)
+                    return true;
+            }
+
+            return false;
         }
 
-        public static T OldValue<T>(T x)
-        {
-            return x;
-        }
-
-        public static T Result<T>()
-        {
-            return default(T);
-        }
-    }
-
-    public static partial class StringBuilderExtensions
-    {
         /// <summary>
         /// Removes all occurences of specified characters from <see cref="System.Text.StringBuilder"/>.
         /// </summary>
@@ -71,7 +63,7 @@ namespace System.Text
             var sbLength = sb.Length;
             for (int i = 0; i < sb.Length; )
             {
-                if (removeChars.Any(ch => ch == sb[i]))
+                if (removeChars.Any(sb[i]))
                     sb.Remove(i, 1);
                 else
                     i++;
@@ -105,16 +97,6 @@ namespace System.Text
                 throw new Exception();
             return sb;
         }
-
-        ///// <summary>
-        ///// Removes all characters from the <see cref="System.Text.StringBuilder"/>.
-        ///// </summary>
-        ///// <param name="sb"></param>
-        //public static void Clear(this StringBuilder sb)
-        //{
-        //    Contract.Ensures(sb.Length == 0);
-        //    sb.Length = 0;
-        //}
 
         private static bool IsBOMWhitespace(char c)
         {
@@ -392,11 +374,6 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (sb.Length != 0 && startIndex + count > sb.Length)
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(Contract.Result<int>() < sb.Length);
-            Contract.Ensures(Contract.Result<int>() == -1 ||
-                            (Contract.Result<int>() >= startIndex && Contract.Result<int>() < startIndex + count));
-            Contract.Ensures((count == 0 && Contract.Result<int>() == -1) || true);
 
             if (sb.Length == 0 || count == 0)
                 return -1;
@@ -429,9 +406,7 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(sb.Length == 0 || Contract.Result<int>() <= Math.Max(sb.Length - value.Length, -1));
-            Contract.Ensures(value != string.Empty || Contract.Result<int>() == 0);
+
             if (value == string.Empty)
                 return 0;
 
@@ -465,9 +440,6 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException(nameof(startIndex));
             if ((sb.Length != 0 || startIndex != 0) && startIndex >= sb.Length)
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() == -1 || Contract.Result<int>() >= startIndex);
-            Contract.Ensures(value == string.Empty || Contract.Result<int>() < sb.Length);
-            Contract.Ensures(value != string.Empty || Contract.Result<int>() == startIndex);
 
             return IndexOfInternal(sb, value, startIndex, sb.Length - startIndex, ignoreCase);
         }
@@ -504,9 +476,6 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException(nameof(count));
             if (startIndex + count > sb.Length)
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(value == string.Empty || Contract.Result<int>() < Math.Max(startIndex + 1 + count - value.Length, 0));
-            Contract.Ensures(Contract.Result<int>() == -1 || Contract.Result<int>() >= startIndex);
-            Contract.Ensures(value != string.Empty || Contract.Result<int>() == startIndex);
 
             return IndexOfInternal(sb, value, startIndex, count, ignoreCase);
         }
@@ -577,8 +546,7 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (anyOf == null)
                 throw new ArgumentNullException(nameof(anyOf));
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(Contract.Result<int>() < sb.Length);
+
 
             return sb.IndexOfAny(anyOf, 0, sb.Length);
         }
@@ -609,9 +577,7 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (sb.Length != 0 && startIndex >= sb.Length)
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() < sb.Length);
-            Contract.Ensures(Contract.Result<int>() == -1 ||
-                            (Contract.Result<int>() >= startIndex && Contract.Result<int>() < sb.Length));
+
 
             return sb.IndexOfAny(anyOf, startIndex, sb.Length - startIndex);
         }
@@ -647,17 +613,13 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (sb.Length != 0 && startIndex + count > sb.Length)
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() < sb.Length);
-            Contract.Ensures(Contract.Result<int>() == -1 ||
-                            (Contract.Result<int>() >= startIndex && Contract.Result<int>() < startIndex + count));
-            Contract.Ensures((count != 0 && Contract.Result<int>() == -1) || true);
 
             if (sb.Length == 0 || count == 0)
                 return -1;
 
             for (int i = startIndex; i < startIndex + count; i++)
             {
-                if (anyOf.Any(ch => ch == sb[i]))
+                if (anyOf.Any(sb[i]))
                 {
                     return i;
                 }
@@ -680,8 +642,7 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(Contract.Result<int>() < sb.Length);
+
             return LastIndexOf(sb, value, sb.Length - 1, sb.Length);
         }
 
@@ -713,8 +674,7 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (sb.Length != 0 && startIndex >= sb.Length)
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() == -1 || Contract.Result<int>() <= startIndex);
-            Contract.Ensures(Contract.Result<int>() < sb.Length);
+
             return sb.LastIndexOf(value, startIndex, startIndex + 1);
         }
 
@@ -749,10 +709,7 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (sb.Length != 0 && startIndex - count + 1 < 0)
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(Contract.Result<int>() <= startIndex);
-            Contract.Ensures(Contract.Result<int>() == -1 || Contract.Result<int>() >= startIndex - count + 1);
-            Contract.Ensures((count == 0 && Contract.Result<int>() == -1) || true);
+
 
             if (sb.Length == 0 || count == 0)
                 return -1;
@@ -786,9 +743,7 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(Contract.Result<int>() <= Math.Max(sb.Length - value.Length, -1));
-            Contract.Ensures(value != string.Empty || (Contract.Result<int>() == 0 && sb.Length == 0) || (Contract.Result<int>() == sb.Length - 1));
+
             if (value == string.Empty)
             {
                 if (sb.Length == 0)
@@ -824,9 +779,6 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException(nameof(startIndex));
             if ((sb.Length != 0 || startIndex != 0) && startIndex >= sb.Length)
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(value == string.Empty || Contract.Result<int>() <= Math.Max(startIndex + 1 - value.Length, -1));
-            Contract.Ensures(value != string.Empty || Contract.Result<int>() == startIndex);
 
             return LastIndexOfInternal(sb, value, startIndex, startIndex + 1, ignoreCase);
         }
@@ -862,10 +814,6 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (!((sb.Length == 0 && startIndex == 0) || startIndex - count + 1 >= 0))
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(value == string.Empty || Contract.Result<int>() <= Math.Max(startIndex + 1 - value.Length, -1));
-            Contract.Ensures(Contract.Result<int>() == -1 || Contract.Result<int>() >= startIndex + 1 - count);
-            Contract.Ensures(value != string.Empty || Contract.Result<int>() == startIndex);
 
             return LastIndexOfInternal(sb, value, startIndex, count, ignoreCase);
         }
@@ -936,8 +884,7 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (anyOf == null)
                 throw new ArgumentNullException(nameof(anyOf));
-            Contract.Ensures(Contract.Result<int>() >= -1);
-            Contract.Ensures(Contract.Result<int>() < sb.Length);
+
             return sb.LastIndexOfAny(anyOf, sb.Length - 1, sb.Length);
         }
 
@@ -967,8 +914,6 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (sb.Length != 0 && startIndex >= sb.Length)
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() < sb.Length);
-            Contract.Ensures(Contract.Result<int>() >= -1 && Contract.Result<int>() <= startIndex);
             return sb.LastIndexOfAny(anyOf, startIndex, startIndex + 1);
         }
 
@@ -1003,17 +948,13 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
             if (!(sb.Length == 0 || startIndex - count + 1 >= 0))
                 throw new ArgumentOutOfRangeException();
-            Contract.Ensures(Contract.Result<int>() < sb.Length);
-            Contract.Ensures(Contract.Result<int>() == -1 ||
-                            (Contract.Result<int>() <= startIndex && Contract.Result<int>() > startIndex - count));
-            Contract.Ensures((count == 0 && Contract.Result<int>() == -1) || true);
 
             if (sb.Length == 0 || count == 0)
                 return -1;
 
             for (int i = startIndex; i > startIndex - count; i--)
             {
-                if (anyOf.Any(ch => ch == sb[i]))
+                if (anyOf.Any(sb[i]))
                 {
                     return i;
                 }
@@ -1038,7 +979,6 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
-            Contract.Ensures(!Contract.Result<bool>() || value.Length <= sb.Length);
 
             int length = value.Length;
             if (length > sb.Length)
@@ -1083,7 +1023,6 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
-            Contract.Ensures(!Contract.Result<bool>() || value.Length <= sb.Length);
 
             int length = value.Length;
             int maxSBIndex = sb.Length - 1;
@@ -1123,8 +1062,6 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            Contract.Ensures(Contract.Result<StringBuilder>() != null);
-            Contract.Ensures(Contract.Result<StringBuilder>().Length == sb.Length);
 
             for (int i = 0; i < sb.Length; i++)
             {
@@ -1147,8 +1084,6 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (culture == null)
                 throw new ArgumentNullException(nameof(culture));
-            Contract.Ensures(Contract.Result<StringBuilder>() != null);
-            Contract.Ensures(Contract.Result<StringBuilder>().Length == sb.Length);
 
             for (int i = 0; i < sb.Length; i++)
             {
@@ -1167,8 +1102,6 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            Contract.Ensures(Contract.Result<StringBuilder>() != null);
-            Contract.Ensures(Contract.Result<StringBuilder>().Length == sb.Length);
 
             return sb.ToLower(CultureInfo.InvariantCulture);
         }
@@ -1182,8 +1115,6 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            Contract.Ensures(Contract.Result<StringBuilder>() != null);
-            Contract.Ensures(Contract.Result<StringBuilder>().Length == sb.Length);
 
             for (int i = 0; i < sb.Length; i++)
             {
@@ -1206,8 +1137,6 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (culture == null)
                 throw new ArgumentNullException(nameof(culture));
-            Contract.Ensures(Contract.Result<StringBuilder>() != null);
-            Contract.Ensures(Contract.Result<StringBuilder>().Length == sb.Length);
 
             for (int i = 0; i < sb.Length; i++)
             {
@@ -1226,8 +1155,6 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            Contract.Ensures(Contract.Result<StringBuilder>() != null);
-            Contract.Ensures(Contract.Result<StringBuilder>().Length == sb.Length);
 
             return sb.ToUpper(CultureInfo.InvariantCulture);
         }

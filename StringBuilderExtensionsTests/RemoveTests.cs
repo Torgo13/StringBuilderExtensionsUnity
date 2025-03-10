@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace System.Text.Tests
-{    
+{
+    [TestFixture]
     public class RemoveTests
     {
         [Test]
@@ -60,41 +56,32 @@ namespace System.Text.Tests
         [Test]
         public void TestIndexLessThanZero()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1).Remove(-1);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestIndexGreaterThanMaximum()
         {
-            try
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(TestStrings.Composition1);
                 sb.Remove(sb.Length);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentOutOfRangeException>(ex);
-            }
+            );
         }
 
         [Test]
         public void TestNullRemoveChars()
         {
-            try
+            Assert.Throws<ArgumentNullException>(() =>
             {
                 StringBuilder sb = new StringBuilder().Remove(null);
             }
-            catch (Exception ex)
-            {
-                Assert.IsAssignableFrom<ArgumentNullException>(ex);
-            }
+            );
         }
     }
 }
