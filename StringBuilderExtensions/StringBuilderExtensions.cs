@@ -29,7 +29,7 @@ namespace System.Text
     public static class StringBuilderExtensions
     {
         /// <summary>
-        /// Replacement for <see cref="System.Linq.Any"/>
+        /// Replacement for <see cref="Linq"/>.Any()
         /// </summary>
         /// <param name="chars">Array of chars.</param>
         /// <param name="c">Char to search for.</param>
@@ -46,14 +46,14 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Removes all occurrences of specified characters from <see cref="System.Text.StringBuilder"/>.
+        /// Removes all occurrences of specified characters from <see cref="StringBuilder"/>.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to remove from.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="removeChars">A Unicode characters to remove.</param>
         /// <returns>
-        /// Returns <see cref="System.Text.StringBuilder"/> without specified Unicode characters.
+        /// Returns <see cref="StringBuilder"/> without specified Unicode characters.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="removeChars"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="removeChars"/> is null.</exception>
         public static StringBuilder Remove(this StringBuilder sb, params char[] removeChars)
         {
             if (sb == null)
@@ -74,12 +74,12 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Removes the range of characters from the specified index to the end of <see cref="System.Text.StringBuilder"/>.
+        /// Removes the range of characters from the specified index to the end of <see cref="StringBuilder"/>.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to remove from.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="startIndex">The zero-based position to begin deleting characters.</param>
         /// <returns>A reference to this instance after the excise operation has completed.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <exception cref="ArgumentOutOfRangeException">
         /// If <paramref name="startIndex"/> is less than zero, or <paramref name="startIndex"/> is greater
         /// than the length - 1 of this instance.
         /// </exception>
@@ -204,12 +204,12 @@ namespace System.Text
 
         /// <summary>
         /// Removes all leading occurrences of a set of characters specified in an array 
-        /// from the current <see cref="System.Text.StringBuilder"/> object.
+        /// from the current <see cref="StringBuilder"/> object.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to remove from.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="trimChars">An array of Unicode characters to remove, or null.</param>
         /// <returns>
-        /// The <see cref="System.Text.StringBuilder"/> object that contains a list of characters 
+        /// The <see cref="StringBuilder"/> object that contains a list of characters 
         /// that remains after all occurrences of the characters in the <paramref name="trimChars"/> parameter 
         /// are removed from the end of the current string. If <paramref name="trimChars"/> is null or an empty array, 
         /// Unicode white-space characters are removed instead.
@@ -226,12 +226,12 @@ namespace System.Text
 
         /// <summary>
         /// Removes all trailing occurrences of a set of characters specified in an array 
-        /// from the current <see cref="System.Text.StringBuilder"/> object.
+        /// from the current <see cref="StringBuilder"/> object.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to remove from.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="trimChars">An array of Unicode characters to remove, or null.</param>
         /// <returns>
-        /// The <see cref="System.Text.StringBuilder"/> object that contains a list of characters that remains 
+        /// The <see cref="StringBuilder"/> object that contains a list of characters that remains 
         /// after all occurrences of the characters in the <paramref name="trimChars"/> parameter are removed 
         /// from the end of the current string. If <paramref name="trimChars"/> is null or an empty array, 
         /// Unicode white-space characters are removed instead.
@@ -247,11 +247,11 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Removes all leading and trailing white-space characters from the current <see cref="System.Text.StringBuilder"/> object.
+        /// Removes all leading and trailing white-space characters from the current <see cref="StringBuilder"/> object.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to remove from.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <returns>
-        /// The <see cref="System.Text.StringBuilder"/> object that contains a list of characters 
+        /// The <see cref="StringBuilder"/> object that contains a list of characters 
         /// that remains after all white-space characters are removed 
         /// from the start and end of the current StringBuilder.
         /// </returns>
@@ -267,12 +267,12 @@ namespace System.Text
 
         /// <summary>
         /// Removes all leading and trailing occurrences of a set of characters specified in an array
-        /// from the current <see cref="System.Text.StringBuilder"/> object.
+        /// from the current <see cref="StringBuilder"/> object.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to </param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to </param>
         /// <param name="trimChars">An array of Unicode characters to remove, or null.</param>
         /// <returns>
-        /// The <see cref="System.Text.StringBuilder"/> object that contains a list of characters that remains 
+        /// The <see cref="StringBuilder"/> object that contains a list of characters that remains 
         /// after all occurrences of the characters in the <paramref name="trimChars"/> parameter are removed 
         /// from the end of the current StringBuilder. If <paramref name="trimChars"/> is null or an empty array, 
         /// Unicode white-space characters are removed instead.
@@ -291,7 +291,7 @@ namespace System.Text
         /// Reports the zero-based index position of the first occurrence of the specified Unicode
         /// character within this instance.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to </param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to </param>
         /// <param name="value">A Unicode character to seek.</param>
         /// <returns>
         /// The zero-based index position of <paramref name="value"/> if that character is found, or -1
@@ -309,18 +309,18 @@ namespace System.Text
 
         /// <summary>
         /// Reports the zero-based index position of the first occurrence of the specified Unicode
-        /// character within this intance. The search starts at a specified character position.
+        /// character within this instance. The search starts at a specified character position.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">A Unicode character to seek.</param>
         /// <param name="startIndex">The search starting position.</param>
         /// <returns>
         /// The zero-based index position of <paramref name="value"/> if that character is found, or -1
         /// if it is not.
         /// </returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// The current instance <see cref="System.Text.StringBuilder.Length"/> does not equal 0, and <paramref name="startIndex"/> 
-        /// is less than 0 (zero) or greater than the length of the <see cref="System.Text.StringBuilder"/>.
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The current instance <see cref="StringBuilder.Length"/> does not equal 0, and <paramref name="startIndex"/> 
+        /// is less than 0 (zero) or greater than the length of the <see cref="StringBuilder"/>.
         /// </exception>
         public static int IndexOf(this StringBuilder sb, char value, int startIndex)
         {
@@ -341,10 +341,10 @@ namespace System.Text
 
         /// <summary>
         /// Reports the zero-based index of the first occurrence of the specified Unicode
-        /// character in this <see cref="System.Text.StringBuilder"/>. The search starts 
+        /// character in this <see cref="StringBuilder"/>. The search starts 
         /// at a specified character position and examines a specified number of character positions.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">A Unicode character to seek.</param>
         /// <param name="startIndex">The search starting position.</param>
         /// <param name="count">The number of character positions to examine.</param>
@@ -352,11 +352,11 @@ namespace System.Text
         /// The zero-based index position of <paramref name="value"/> if that character is found, or -1 
         /// if it is not.
         /// </returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// The current instance <see cref="System.Text.StringBuilder.Length"/> does not equal 0, and <paramref name="count"/> 
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The current instance <see cref="StringBuilder.Length"/> does not equal 0, and <paramref name="count"/> 
         /// or <paramref name="startIndex"/> is negative.-or- <paramref name="startIndex"/> is greater than 
-        /// the length of this <see cref="System.Text.StringBuilder"/>.
-        /// -or-The current instance <see cref="System.Text.StringBuilder.Length"/> does not equal 0, and <paramref name="count"/> 
+        /// the length of this <see cref="StringBuilder"/>.
+        /// -or-The current instance <see cref="StringBuilder.Length"/> does not equal 0, and <paramref name="count"/> 
         /// is greater than the length of this string minus <paramref name="startIndex"/>. 
         /// </exception>
         public static int IndexOf(this StringBuilder sb, char value, int startIndex, int count)
@@ -384,17 +384,17 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="System.Text.StringBuilder"/> object.
+        /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="StringBuilder"/> object.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
         /// The zero-based index position of the <paramref name="value"/> parameter if that string is found, 
-        /// or -1 if it is not. If <paramref name="value"/> is <see cref="System.String.Empty"/>, the return value 
-        /// is <paramref name="startIndex"/>.
+        /// or -1 if it is not. If <paramref name="value"/> is <see cref="String.Empty"/>, the return value 
+        /// is 0.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="value"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
         public static int IndexOf(this StringBuilder sb, string value, bool ignoreCase = false)
         {
             if (sb == null)
@@ -409,21 +409,21 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="System.Text.StringBuilder"/> object. 
-        /// Parameter specifies the starting search position in the current <see cref="System.Text.StringBuilder"/>.
+        /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="StringBuilder"/> object. 
+        /// Parameter specifies the starting search position in the current <see cref="StringBuilder"/>.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek. </param>
         /// <param name="startIndex">The search starting position.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
         /// The zero-based index position of the <paramref name="value"/> parameter if that string is found, 
-        /// or -1 if it is not. If <paramref name="value"/> is <see cref="System.String.Empty"/>, the return value 
+        /// or -1 if it is not. If <paramref name="value"/> is <see cref="String.Empty"/>, the return value 
         /// is <paramref name="startIndex"/>.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="value"/> is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// <paramref name="startIndex"/> is less than 0 (zero) or greater than the length of this <see cref="System.Text.StringBuilder"/>.
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="startIndex"/> is less than 0 (zero) or greater than the length of this <see cref="StringBuilder"/>.
         /// </exception>
         public static int IndexOf(this StringBuilder sb, string value, int startIndex, bool ignoreCase = false)
         {
@@ -440,24 +440,24 @@ namespace System.Text
         }
                 
         /// <summary>
-        /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="System.Text.StringBuilder"/> object. 
+        /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="StringBuilder"/> object. 
         /// The search starts at a specified character position and examines a specified number of character positions.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek.</param>
         /// <param name="startIndex">The search starting position.</param>
         /// <param name="count">The number of character positions to examine.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
         /// The zero-based index position of the <paramref name="value"/> parameter if that string is found, 
-        /// or -1 if it is not. If <paramref name="value"/> is <see cref="System.String.Empty"/>, 
+        /// or -1 if it is not. If <paramref name="value"/> is <see cref="String.Empty"/>, 
         /// the return value is <paramref name="startIndex"/>.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">value is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <exception cref="ArgumentNullException">value is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="count"/> or <paramref name="startIndex"/> is negative.-or- <paramref name="startIndex"/> is 
         /// greater than the length of this instance.-or-<paramref name="count"/> is greater than the length of 
-        /// this <see cref="System.Text.StringBuilder"/> minus <paramref name="startIndex"/>.
+        /// this <see cref="StringBuilder"/> minus <paramref name="startIndex"/>.
         /// </exception>
         public static int IndexOf(this StringBuilder sb, string value, int startIndex, int count, bool ignoreCase = false)
         {
@@ -528,13 +528,13 @@ namespace System.Text
         /// Reports the zero-based index of the first occurrence in this instance 
         /// of any character in a specified array of Unicode characters.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="anyOf">A Unicode character array containing one or more characters to seek.</param>
         /// <returns>
         /// The zero-based index position of the first occurrence in this instance
         /// where any character in <paramref name="anyOf"/> was found; -1 if no character in <paramref name="anyOf"/> was found.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">anyOf is null.</exception>
+        /// <exception cref="ArgumentNullException">anyOf is null.</exception>
         public static int IndexOfAny(this StringBuilder sb, char[] anyOf)
         {
             if (sb == null)
@@ -549,15 +549,15 @@ namespace System.Text
         /// Reports the zero-based index of the first occurrence in this instance of any character 
         /// in a specified array of Unicode characters. The search starts at a specified character position.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="anyOf">A Unicode character array containing one or more characters to seek.</param>
         /// <param name="startIndex">The search starting position.</param>
         /// <returns>
         /// The zero-based index position of the first occurrence in this instance
         /// where any character in <paramref name="anyOf"/> was found; -1 if no character in <paramref name="anyOf"/> was found.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <exception cref="ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="startIndex"/> is negative.-or-<paramref name="startIndex"/> is greater 
         /// than the number of characters in this instance.
         /// </exception>
@@ -579,7 +579,7 @@ namespace System.Text
         /// Reports the zero-based index of the first occurrence in this instance of any character 
         /// in a specified array of Unicode characters. The search starts at a specified character position and examines a specified number of character positions.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="anyOf">A Unicode character array containing one or more characters to seek.</param>
         /// <param name="startIndex">The search starting position.</param>
         /// <param name="count">The number of character positions to examine.</param>
@@ -587,8 +587,8 @@ namespace System.Text
         /// The zero-based index position of the first occurrence in this instance
         /// where any character in <paramref name="anyOf"/> was found; -1 if no character in <paramref name="anyOf"/> was found.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <exception cref="ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="count"/> or <paramref name="startIndex"/> is negative.
         /// -or-<paramref name="count"/> + <paramref name="startIndex"/> is greater than the number of characters in this instance.
         /// </exception>
@@ -625,7 +625,7 @@ namespace System.Text
         /// Reports the zero-based index of the last occurrence of the specified Unicode
         /// character within this instance.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to </param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to </param>
         /// <param name="value">A Unicode character to seek.</param>
         /// <returns>
         /// The zero-based index position of <paramref name="value"/> if that character is found, or -1
@@ -642,10 +642,10 @@ namespace System.Text
         /// <summary>
         /// Reports the zero-based index position of the last occurrence of the specified Unicode character 
         /// in a substring within this instance. The search starts at a specified character position and 
-        /// proceeds backward toward the beginning of the <see cref="System.Text.StringBuilder"/> 
+        /// proceeds backward toward the beginning of the <see cref="StringBuilder"/> 
         /// for a specified number of character positions.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">A Unicode character to seek.</param>
         /// <param name="startIndex">
         /// The starting position of the search. The search proceeds from <paramref name="startIndex"/> toward the beginning 
@@ -655,8 +655,8 @@ namespace System.Text
         /// The zero-based index position of <paramref name="value"/> if that character is found, or -1
         /// if it is not.
         /// </returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// The current instance <see cref="System.Text.StringBuilder.Length"/> does not equal 0, 
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The current instance <see cref="StringBuilder.Length"/> does not equal 0, 
         /// and <paramref name="startIndex"/> is less than zero or greater than or equal to the length of this instance.
         /// </exception>
         public static int LastIndexOf(this StringBuilder sb, char value, int startIndex)
@@ -673,10 +673,10 @@ namespace System.Text
 
         /// <summary>
         /// Reports the zero-based index of the last occurrence of the specified Unicode
-        /// character in this <see cref="System.Text.StringBuilder"/>. The search starts 
+        /// character in this <see cref="StringBuilder"/>. The search starts 
         /// at a specified character position and examines a specified number of character positions.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">A Unicode character to seek.</param>
         /// <param name="startIndex">The search starting position.</param>
         /// <param name="count">The number of character positions to examine.</param>
@@ -684,10 +684,10 @@ namespace System.Text
         /// The zero-based index position of <paramref name="value"/> if that character is found, or -1 
         /// if it is not.
         /// </returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// The current instance <see cref="System.Text.StringBuilder.Length"/> does not equal 0, 
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The current instance <see cref="StringBuilder.Length"/> does not equal 0, 
         /// and <paramref name="startIndex"/> is less than zero or greater than or equal to the length of this instance.
-        /// -or-The current instance <see cref="System.Text.StringBuilder.Length"/> 
+        /// -or-The current instance <see cref="StringBuilder.Length"/> 
         /// does not equal 0, and <paramref name="startIndex"/> - <paramref name="count"/> + 1 is less than zero.
         /// </exception>
         public static int LastIndexOf(this StringBuilder sb, char value, int startIndex, int count)
@@ -719,16 +719,16 @@ namespace System.Text
 
         /// <summary>
         /// Reports the zero-based index of the last occurrence of the specified string 
-        /// in the current <see cref="System.Text.StringBuilder"/> object.
+        /// in the current <see cref="StringBuilder"/> object.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to </param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to </param>
         /// <param name="value">The string to seek.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
         /// The zero-based index position of the value parameter if that string is found, 
-        /// or -1 if it is not. If value is <see cref="System.String.Empty"/>, the return value is startIndex.
+        /// or -1 if it is not. If value is <see cref="String.Empty"/>, the return value is startIndex.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">value is null.</exception>
+        /// <exception cref="ArgumentNullException">value is null.</exception>
         public static int LastIndexOf(this StringBuilder sb, string value, bool ignoreCase = false)
         {
             if (sb == null)
@@ -750,16 +750,16 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Reports the zero-based index of the last occurrence of the specified string in the current <see cref="System.Text.StringBuilder"/> object. 
-        /// Parameter specifies the starting search position in the current <see cref="System.Text.StringBuilder"/>.
+        /// Reports the zero-based index of the last occurrence of the specified string in the current <see cref="StringBuilder"/> object. 
+        /// Parameter specifies the starting search position in the current <see cref="StringBuilder"/>.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek. </param>
         /// <param name="startIndex">The search starting position.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
         /// The zero-based index position of the value parameter if that string is found, 
-        /// or -1 if it is not. If value is <see cref="System.String.Empty"/>, the return value is startIndex.
+        /// or -1 if it is not. If value is <see cref="String.Empty"/>, the return value is startIndex.
         /// </returns>
         public static int LastIndexOf(this StringBuilder sb, string value, int startIndex, bool ignoreCase = false)
         {
@@ -776,20 +776,20 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Reports the zero-based index of the last occurrence of the specified string in the current <see cref="System.Text.StringBuilder"/> object. 
+        /// Reports the zero-based index of the last occurrence of the specified string in the current <see cref="StringBuilder"/> object. 
         /// The search starts at a specified character position and examines a specified number of character positions.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek.</param>
         /// <param name="startIndex">The search starting position.</param>
         /// <param name="count">The number of character positions to examine.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
         /// The zero-based index position of the value parameter if that string is found, 
-        /// or -1 if it is not. If value is <see cref="System.String.Empty"/>, the return value is startIndex.
+        /// or -1 if it is not. If value is <see cref="String.Empty"/>, the return value is startIndex.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">value is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <exception cref="ArgumentNullException">value is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
         /// startIndex is less than 0 (zero) or greater than the length of this string.
         /// </exception>
         public static int LastIndexOf(this StringBuilder sb, string value, int startIndex, int count, bool ignoreCase = false)
@@ -863,13 +863,13 @@ namespace System.Text
         /// Reports the zero-based index of the last occurrence in this instance 
         /// of any character in a specified array of Unicode characters.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="anyOf">A Unicode character array containing one or more characters to seek.</param>
         /// <returns>
         /// The zero-based index position of the last occurrence in this instance
         /// where any character in <paramref name="anyOf"/> was found; -1 if no character in <paramref name="anyOf"/> was found.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
         public static int LastIndexOfAny(this StringBuilder sb, char[] anyOf)
         {
             if (sb == null)
@@ -884,15 +884,15 @@ namespace System.Text
         /// Reports the zero-based index of the last occurrence in this instance of any character 
         /// in a specified array of Unicode characters. The search starts at a specified character position.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="anyOf">A Unicode character array containing one or more characters to seek.</param>
         /// <param name="startIndex">The search starting position.</param>
         /// <returns>
         /// The zero-based index position of the last occurrence in this instance
         /// where any character in <paramref name="anyOf"/> was found; -1 if no character in <paramref name="anyOf"/> was found.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <exception cref="ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="startIndex"/> is negative.-or- <paramref name="startIndex"/> is greater 
         /// than the number of characters in this instance.
         /// </exception>
@@ -914,7 +914,7 @@ namespace System.Text
         /// Reports the zero-based index of the last occurrence in this instance of any character 
         /// in a specified array of Unicode characters. The search starts at a specified character position and examines a specified number of character positions.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to search.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="anyOf">A Unicode character array containing one or more characters to seek.</param>
         /// <param name="startIndex">The search starting position.</param>
         /// <param name="count">The number of character positions to examine.</param>
@@ -922,8 +922,8 @@ namespace System.Text
         /// The zero-based index position of the last occurrence in this instance
         /// where any character in <paramref name="anyOf"/> was found; -1 if no character in <paramref name="anyOf"/> was found.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// <exception cref="ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
         /// <paramref name="count"/> or <paramref name="startIndex"/> is negative.
         /// -or-<paramref name="count"/> + <paramref name="startIndex"/> is greater than the number of characters in this instance.
         /// </exception>
@@ -957,15 +957,15 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Determines whether this instance of <see cref="System.Text.StringBuilder"/> starts with the specified string.
+        /// Determines whether this instance of <see cref="StringBuilder"/> starts with the specified string.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to compare.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to compare.</param>
         /// <param name="value">The string to compare.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
         /// true if the <paramref name="value"/> parameter matches the beginning of this string; otherwise, false.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="value"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
         public static bool StartsWith(this StringBuilder sb, string value, bool ignoreCase = false)
         {
             if (sb == null)
@@ -1001,15 +1001,15 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Determines whether this instance of <see cref="System.Text.StringBuilder"/> ends with the specified string.
+        /// Determines whether this instance of <see cref="StringBuilder"/> ends with the specified string.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to compare.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to compare.</param>
         /// <param name="value">The string to compare to the substring at the end of this instance.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
         /// true if the <paramref name="value"/> parameter matches the beginning of this string; otherwise, false.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="value"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
         public static bool EndsWith(this StringBuilder sb, string value, bool ignoreCase = false)
         {
             if (sb == null)
@@ -1047,10 +1047,10 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Returns a <see cref="System.Text.StringBuilder"/> converted to lowercase.
+        /// Returns a <see cref="StringBuilder"/> converted to lowercase.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to convert to lowercase.</param>
-        /// <returns>The <see cref="System.Text.StringBuilder"/> converted to lowercase.</returns>
+        /// <param name="sb">A <see cref="StringBuilder"/> to convert to lowercase.</param>
+        /// <returns>The <see cref="StringBuilder"/> converted to lowercase.</returns>
         public static StringBuilder ToLower(this StringBuilder sb)
         {
             if (sb == null)
@@ -1065,12 +1065,12 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Returns a <see cref="System.Text.StringBuilder"/> converted to lowercase, using the casing rules of the specified culture.
+        /// Returns a <see cref="StringBuilder"/> converted to lowercase, using the casing rules of the specified culture.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to convert to lowercase.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to convert to lowercase.</param>
         /// <param name="culture">An object that supplies culture-specific casing rules.</param>
-        /// <returns>The <see cref="System.Text.StringBuilder"/> converted to lowercase using specified culture.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="culture"/>is null.</exception>
+        /// <returns>The <see cref="StringBuilder"/> converted to lowercase using specified culture.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="culture"/>is null.</exception>
         public static StringBuilder ToLower(this StringBuilder sb, CultureInfo culture)
         {
             if (sb == null)
@@ -1087,10 +1087,10 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Returns a <see cref="System.Text.StringBuilder"/> converted to lowercase, using the casing rules of the invariant culture.
+        /// Returns a <see cref="StringBuilder"/> converted to lowercase, using the casing rules of the invariant culture.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to convert to lowercase.</param>
-        /// <returns>The <see cref="System.Text.StringBuilder"/> converted to lowercase using invariant culture.</returns>
+        /// <param name="sb">A <see cref="StringBuilder"/> to convert to lowercase.</param>
+        /// <returns>The <see cref="StringBuilder"/> converted to lowercase using invariant culture.</returns>
         public static StringBuilder ToLowerInvariant(this StringBuilder sb)
         {
             if (sb == null)
@@ -1100,10 +1100,10 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Returns a <see cref="System.Text.StringBuilder"/> converted to uppercase.
+        /// Returns a <see cref="StringBuilder"/> converted to uppercase.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to convert to uppercase.</param>
-        /// <returns>The <see cref="System.Text.StringBuilder"/> converted to uppercase.</returns>
+        /// <param name="sb">A <see cref="StringBuilder"/> to convert to uppercase.</param>
+        /// <returns>The <see cref="StringBuilder"/> converted to uppercase.</returns>
         public static StringBuilder ToUpper(this StringBuilder sb)
         {
             if (sb == null)
@@ -1118,12 +1118,12 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Returns a <see cref="System.Text.StringBuilder"/> converted to uppercase, using the casing rules of the specified culture.
+        /// Returns a <see cref="StringBuilder"/> converted to uppercase, using the casing rules of the specified culture.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to convert to uppercase.</param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to convert to uppercase.</param>
         /// <param name="culture">An object that supplies culture-specific casing rules.</param>
-        /// <returns>The <see cref="System.Text.StringBuilder"/> converted to uppercase using specified culture.</returns>
-        /// <exception cref="System.ArgumentNullException"><paramref name="culture"/>is null.</exception>
+        /// <returns>The <see cref="StringBuilder"/> converted to uppercase using specified culture.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="culture"/>is null.</exception>
         public static StringBuilder ToUpper(this StringBuilder sb, CultureInfo culture)
         {
             if (sb == null)
@@ -1140,10 +1140,10 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Returns a <see cref="System.Text.StringBuilder"/> converted to uppercase, using the casing rules of the invariant culture.
+        /// Returns a <see cref="StringBuilder"/> converted to uppercase, using the casing rules of the invariant culture.
         /// </summary>
-        /// <param name="sb">A <see cref="System.Text.StringBuilder"/> to convert to uppercase.</param>
-        /// <returns>The <see cref="System.Text.StringBuilder"/> converted to uppercase using invariant culture.</returns>
+        /// <param name="sb">A <see cref="StringBuilder"/> to convert to uppercase.</param>
+        /// <returns>The <see cref="StringBuilder"/> converted to uppercase using invariant culture.</returns>
         public static StringBuilder ToUpperInvariant(this StringBuilder sb)
         {
             if (sb == null)
