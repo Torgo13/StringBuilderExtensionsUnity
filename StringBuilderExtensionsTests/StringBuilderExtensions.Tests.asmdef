@@ -2,9 +2,10 @@
     "name": "StringBuilderExtensions.Tests",
     "rootNamespace": "",
     "references": [
-        "GUID:27619889b8ba8c24980f49ee34dbb44a",
-        "GUID:0acc523941302664db1f4e527237feb3",
         "GUID:e596a3212ad2f764c81bfe3555f7c877"
+    ],
+    "optionalUnityReferences": [
+      "TestAssemblies"
     ],
     "includePlatforms": [
         "Editor"
@@ -12,13 +13,7 @@
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
-    "precompiledReferences": [
-        "nunit.framework.dll"
-    ],
     "autoReferenced": false,
-    "defineConstraints": [
-        "UNITY_INCLUDE_TESTS"
-    ],
     "versionDefines": [],
     "noEngineReferences": false
 }

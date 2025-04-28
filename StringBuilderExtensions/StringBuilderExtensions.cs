@@ -1151,5 +1151,115 @@ namespace System.Text
 
             return sb.ToUpper(CultureInfo.InvariantCulture);
         }
+
+        /// <summary>
+        /// Removes all occurrences of specified characters from <see cref="StringBuilder"/>.
+        /// </summary>
+        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
+        /// <param name="removeChar">A Unicode character to remove.</param>
+        /// <returns>
+        /// Returns <see cref="StringBuilder"/> without specified Unicode characters.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="sb"/> is null.</exception>
+        public static StringBuilder Remove(this StringBuilder sb, char removeChar)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+
+            for (int i = 0; i < sb.Length;)
+            {
+                if (removeChar == sb[i])
+                    _ = sb.Remove(i, 1);
+                else
+                    i++;
+            }
+
+            return sb;
+        }
+
+        /// <summary>
+        /// Removes all whitespace from <see cref="StringBuilder"/>.
+        /// </summary>
+        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
+        /// <returns>
+        /// Returns <see cref="StringBuilder"/> without whitespace.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="sb"/> is null.</exception>
+        public static StringBuilder RemoveWhiteSpace(this StringBuilder sb)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+
+            for (int i = 0; i < sb.Length;)
+            {
+                if (char.IsWhiteSpace(sb[i]))
+                    _ = sb.Remove(i, 1);
+                else
+                    i++;
+            }
+
+            return sb;
+        }
+
+        /// <summary>
+        /// Discard StringComparison to keep compatibility with <see cref="string.Replace(string, string)"/>
+        /// </summary>
+        public static StringBuilder Replace(this StringBuilder stringBuilder, string oldValue, string newValue,
+            StringComparison comparisonType)
+        {
+            return stringBuilder.Replace(oldValue, newValue);
+        }
+
+        public static StringBuilder Replace(this StringBuilder stringBuilder, string oldValue, int newValue,
+            bool ignoreCase = false)
+        {
+            int oldValueLength = oldValue?.Length ?? 0;
+            if (oldValueLength == 0)
+                return stringBuilder;
+
+            int index = stringBuilder.IndexOf(oldValue, ignoreCase);
+            while (index != -1)
+            {
+                _ = stringBuilder.Remove(index, oldValueLength);
+                _ = stringBuilder.Insert(index, newValue);
+
+                index = stringBuilder.IndexOf(oldValue, ignoreCase);
+            }
+
+            return stringBuilder;
+        }
+
+        public static StringBuilder EnsureRoom(this StringBuilder stringBuilder, int room)
+        {
+            _ = stringBuilder.EnsureCapacity(stringBuilder.Length + room);
+            return stringBuilder;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="StringComparison"/> to a <see langword="bool"/> without boxing.
+        /// </summary>
+        /// <param name="comparisonType">A <see cref="StringComparison"/> enum.</param>
+        /// <returns>True if <paramref name="comparisonType"/> ignores case.</returns>
+        static bool IgnoreCase(StringComparison comparisonType = default)
+        {
+            return System.Runtime.CompilerServices.Unsafe.As<StringComparison, int>(ref comparisonType) % 2 != 0;
+        }
+
+        public static bool Contains(this StringBuilder stringBuilder, string value,
+            StringComparison comparisonType)
+        {
+            return stringBuilder.IndexOf(value, IgnoreCase(comparisonType)) >= 0;
+        }
+
+        public static bool Contains(this StringBuilder stringBuilder, string value,
+            bool ignoreCase = false)
+        {
+            return stringBuilder.IndexOf(value, ignoreCase) >= 0;
+        }
+
+        public static bool Contains(this StringBuilder stringBuilder, char value)
+        {
+            return stringBuilder.IndexOf(value) >= 0;
+        }
     }
 }
