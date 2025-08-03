@@ -34,7 +34,7 @@ namespace System.Text
         /// <param name="chars">Array of chars.</param>
         /// <param name="c">Char to search for.</param>
         /// <returns>True if char c is present in chars.</returns>
-        static bool Any(this char[] chars, char c)
+        private static bool Any(this char[] chars, char c)
         {
             foreach (char ch in chars)
             {
@@ -45,11 +45,48 @@ namespace System.Text
             return false;
         }
 
+        /// <inheritdoc cref="Any(char[], char)"/>
+        private static bool Any(this StringBuilder chars, char c)
+        {
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (chars[i] == c)
+                    return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Removes all occurrences of specified characters from <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
-        /// <param name="removeChars">A Unicode characters to remove.</param>
+        /// <param name="removeChar">A Unicode character to remove.</param>
+        /// <returns>
+        /// Returns <see cref="StringBuilder"/> without specified Unicode characters.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="sb"/> is null.</exception>
+        public static StringBuilder Remove(this StringBuilder sb, char removeChar)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+
+            for (int i = 0; i < sb.Length;)
+            {
+                if (removeChar == sb[i])
+                    _ = sb.Remove(i, 1);
+                else
+                    i++;
+            }
+
+            return sb;
+        }
+
+        /// <summary>
+        /// Removes all occurrences of specified characters from <see cref="StringBuilder"/>.
+        /// </summary>
+        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
+        /// <param name="removeChars">Unicode characters to remove.</param>
         /// <returns>
         /// Returns <see cref="StringBuilder"/> without specified Unicode characters.
         /// </returns>
@@ -60,16 +97,34 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (removeChars == null)
                 throw new ArgumentNullException(nameof(removeChars));
-            var sbLength = sb.Length;
+
             for (int i = 0; i < sb.Length;)
             {
                 if (removeChars.Any(sb[i]))
-                    sb.Remove(i, 1);
+                    _ = sb.Remove(i, 1);
                 else
                     i++;
             }
-            if (sb.Length > sbLength)
-                throw new Exception();
+
+            return sb;
+        }
+
+        /// <inheritdoc cref="Remove(StringBuilder, char[])"/>
+        public static StringBuilder Remove(this StringBuilder sb, StringBuilder removeChars)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (removeChars == null)
+                throw new ArgumentNullException(nameof(removeChars));
+
+            for (int i = 0; i < sb.Length;)
+            {
+                if (removeChars.Any(sb[i]))
+                    _ = sb.Remove(i, 1);
+                else
+                    i++;
+            }
+
             return sb;
         }
 
@@ -91,11 +146,31 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException(nameof(startIndex));
             if (startIndex >= sb.Length)
                 throw new ArgumentOutOfRangeException(nameof(startIndex));
-            var sbLength = sb.Length;
-            sb.Remove(startIndex, sb.Length - startIndex);
-            if (sb.Length > sbLength)
-                throw new Exception();
-            return sb;
+
+            return sb.Remove(startIndex, sb.Length - startIndex);
+        }
+        
+        private static StringBuilder CreateTrimmedString(this StringBuilder sb, int start, int end)
+        {
+            int length = (end - start) + 1;
+            if (length == sb.Length)
+            {
+                return sb;
+            }
+
+            if (length == 0)
+            {
+                sb.Length = 0;
+                return sb;
+            }
+
+            return sb.InternalSubString(start, end);
+        }
+
+        private static StringBuilder InternalSubString(this StringBuilder sb, int startIndex, int end)
+        {
+            sb.Length = end + 1;
+            return sb.Remove(0, startIndex);
         }
 
         private static StringBuilder TrimHelper(this StringBuilder sb, int trimType)
@@ -111,9 +186,11 @@ namespace System.Text
                     {
                         break;
                     }
+
                     start++;
                 }
             }
+
             if (trimType != 0)
             {
                 end = sb.Length - 1;
@@ -123,32 +200,12 @@ namespace System.Text
                     {
                         break;
                     }
+
                     end--;
                 }
             }
+
             return sb.CreateTrimmedString(start, end);
-        }
-
-        private static StringBuilder CreateTrimmedString(this StringBuilder sb, int start, int end)
-        {
-            int length = (end - start) + 1;
-            if (length == sb.Length)
-            {
-                return sb;
-            }
-            if (length == 0)
-            {
-                sb.Length = 0;
-                return sb;
-            }
-            return sb.InternalSubString(start, end);
-        }
-
-        private static StringBuilder InternalSubString(this StringBuilder sb, int startIndex, int end)
-        {
-            sb.Length = end + 1;
-            sb.Remove(0, startIndex);
-            return sb;
         }
 
         private static StringBuilder TrimHelper(this StringBuilder sb, char[] trimChars, int trimType)
@@ -168,15 +225,19 @@ namespace System.Text
                         {
                             break;
                         }
+
                         index++;
                     }
+
                     if (index == trimChars.Length)
                     {
                         break;
                     }
+
                     start++;
                 }
             }
+
             if (trimType != 0)
             {
                 end = sb.Length - 1;
@@ -190,15 +251,79 @@ namespace System.Text
                         {
                             break;
                         }
+
                         num4++;
                     }
+
                     if (num4 == trimChars.Length)
                     {
                         break;
                     }
+
                     end--;
                 }
             }
+
+            return sb.CreateTrimmedString(start, end);
+        }
+
+        /// <inheritdoc cref="TrimHelper(StringBuilder, char[], int)"/>
+        private static StringBuilder TrimHelper(this StringBuilder sb, StringBuilder trimChars, int trimType)
+        {
+            int end = sb.Length - 1;
+            int start = 0;
+            if (trimType != 1)
+            {
+                start = 0;
+                while (start < sb.Length)
+                {
+                    int index = 0;
+                    char ch = sb[start];
+                    while (index < trimChars.Length)
+                    {
+                        if (trimChars[index] == ch)
+                        {
+                            break;
+                        }
+
+                        index++;
+                    }
+
+                    if (index == trimChars.Length)
+                    {
+                        break;
+                    }
+
+                    start++;
+                }
+            }
+
+            if (trimType != 0)
+            {
+                end = sb.Length - 1;
+                while (end >= start)
+                {
+                    int num4 = 0;
+                    char ch2 = sb[end];
+                    while (num4 < trimChars.Length)
+                    {
+                        if (trimChars[num4] == ch2)
+                        {
+                            break;
+                        }
+
+                        num4++;
+                    }
+
+                    if (num4 == trimChars.Length)
+                    {
+                        break;
+                    }
+
+                    end--;
+                }
+            }
+
             return sb.CreateTrimmedString(start, end);
         }
 
@@ -218,10 +343,21 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            var result = trimChars != null && trimChars.Length != 0 ? sb.TrimHelper(trimChars, 0) : sb.TrimHelper(0);
-            if (result == null)
-                throw new Exception();
-            return result;
+
+            return trimChars != null && trimChars.Length != 0
+                ? sb.TrimHelper(trimChars, 0)
+                : sb.TrimHelper(0);
+        }
+
+        /// <inheritdoc cref="TrimStart(StringBuilder, char[])"/>
+        public static StringBuilder TrimStart(this StringBuilder sb, StringBuilder trimChars)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+
+            return trimChars != null && trimChars.Length != 0
+                ? sb.TrimHelper(trimChars, 0)
+                : sb.TrimHelper(0);
         }
 
         /// <summary>
@@ -240,10 +376,21 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            var result = trimChars != null && trimChars.Length != 0 ? sb.TrimHelper(trimChars, 1) : sb.TrimHelper(1);
-            if (result == null)
-                throw new Exception();
-            return result;
+
+            return trimChars != null && trimChars.Length != 0
+                ? sb.TrimHelper(trimChars, 1)
+                : sb.TrimHelper(1);
+        }
+
+        /// <inheritdoc cref="TrimEnd(StringBuilder, char[])"/>
+        public static StringBuilder TrimEnd(this StringBuilder sb, StringBuilder trimChars)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+
+            return trimChars != null && trimChars.Length != 0
+                ? sb.TrimHelper(trimChars, 1)
+                : sb.TrimHelper(1);
         }
 
         /// <summary>
@@ -259,17 +406,15 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            var result = sb.TrimHelper(2);
-            if (result == null)
-                throw new Exception();
-            return result;
+
+            return sb.TrimHelper(2);
         }
 
         /// <summary>
         /// Removes all leading and trailing occurrences of a set of characters specified in an array
         /// from the current <see cref="StringBuilder"/> object.
         /// </summary>
-        /// <param name="sb">A <see cref="StringBuilder"/> to </param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="trimChars">An array of Unicode characters to remove, or null.</param>
         /// <returns>
         /// The <see cref="StringBuilder"/> object that contains a list of characters that remains 
@@ -281,17 +426,28 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            var result = trimChars != null && trimChars.Length != 0 ? sb.TrimHelper(trimChars, 2) : sb.TrimHelper(2);
-            if (result == null)
-                throw new Exception();
-            return result;
+
+            return trimChars != null && trimChars.Length != 0
+                ? sb.TrimHelper(trimChars, 2)
+                : sb.TrimHelper(2);
+        }
+
+        /// <inheritdoc cref="Trim(StringBuilder, char[])"/>
+        public static StringBuilder Trim(this StringBuilder sb, StringBuilder trimChars)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+
+            return trimChars != null && trimChars.Length != 0
+                ? sb.TrimHelper(trimChars, 2)
+                : sb.TrimHelper(2);
         }
 
         /// <summary>
         /// Reports the zero-based index position of the first occurrence of the specified Unicode
         /// character within this instance.
         /// </summary>
-        /// <param name="sb">A <see cref="StringBuilder"/> to </param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">A Unicode character to seek.</param>
         /// <returns>
         /// The zero-based index position of <paramref name="value"/> if that character is found, or -1
@@ -301,10 +457,8 @@ namespace System.Text
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
-            var result = IndexOf(sb, value, 0, sb.Length);
-            if (result < -1 || result >= sb.Length)
-                throw new Exception();
-            return result;
+
+            return IndexOf(sb, value, 0, sb.Length);
         }
 
         /// <summary>
@@ -331,12 +485,7 @@ namespace System.Text
             if (sb.Length != 0 && startIndex >= sb.Length)
                 throw new ArgumentOutOfRangeException();
 
-            var result = sb.IndexOf(value, startIndex, sb.Length - startIndex);
-            if (result != -1 && result < startIndex)
-                throw new Exception();
-            if (result >= sb.Length)
-                throw new Exception();
-            return result;
+            return sb.IndexOf(value, startIndex, sb.Length - startIndex);
         }
 
         /// <summary>
@@ -380,6 +529,7 @@ namespace System.Text
                     return i;
                 }
             }
+
             return -1;
         }
 
@@ -403,6 +553,20 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(value));
 
             if (value == string.Empty)
+                return 0;
+
+            return IndexOfInternal(sb, value, 0, sb.Length, ignoreCase);
+        }
+
+        /// <inheritdoc cref="IndexOf(StringBuilder,string,bool)"/>
+        public static int IndexOf(this StringBuilder sb, StringBuilder value, bool ignoreCase = false)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            if (value.Length == 0)
                 return 0;
 
             return IndexOfInternal(sb, value, 0, sb.Length, ignoreCase);
@@ -438,7 +602,22 @@ namespace System.Text
 
             return IndexOfInternal(sb, value, startIndex, sb.Length - startIndex, ignoreCase);
         }
-                
+
+        /// <inheritdoc cref="IndexOf(StringBuilder,string,int,bool)"/>
+        public static int IndexOf(this StringBuilder sb, StringBuilder value, int startIndex, bool ignoreCase = false)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            if (startIndex < 0)
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+            if ((sb.Length != 0 || startIndex != 0) && startIndex >= sb.Length)
+                throw new ArgumentOutOfRangeException();
+
+            return IndexOfInternal(sb, value, startIndex, sb.Length - startIndex, ignoreCase);
+        }
+
         /// <summary>
         /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="StringBuilder"/> object. 
         /// The search starts at a specified character position and examines a specified number of character positions.
@@ -475,6 +654,23 @@ namespace System.Text
             return IndexOfInternal(sb, value, startIndex, count, ignoreCase);
         }
 
+        /// <inheritdoc cref="IndexOf(StringBuilder,string,int,int,bool)"/>
+        public static int IndexOf(this StringBuilder sb, StringBuilder value, int startIndex, int count, bool ignoreCase = false)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            if (startIndex < 0)
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+            if (count < 0)
+                throw new ArgumentOutOfRangeException(nameof(count));
+            if (startIndex + count > sb.Length)
+                throw new ArgumentOutOfRangeException();
+
+            return IndexOfInternal(sb, value, startIndex, count, ignoreCase);
+        }
+
         private static int IndexOfInternal(StringBuilder sb, string value, int startIndex, int count, bool ignoreCase)
         {
             if (value == string.Empty)
@@ -485,7 +681,7 @@ namespace System.Text
             int num3;
             int length = value.Length;
             int num2 = startIndex + count - value.Length;
-            if (ignoreCase == false)
+            if (!ignoreCase)
             {
                 for (int i = startIndex; i <= num2; i++)
                 {
@@ -496,6 +692,7 @@ namespace System.Text
                         {
                             num3++;
                         }
+
                         if (num3 == length)
                         {
                             return i;
@@ -514,6 +711,7 @@ namespace System.Text
                         {
                             num3++;
                         }
+
                         if (num3 == length)
                         {
                             return j;
@@ -521,6 +719,59 @@ namespace System.Text
                     }
                 }
             }
+
+            return -1;
+        }
+
+        private static int IndexOfInternal(StringBuilder sb, StringBuilder value, int startIndex, int count, bool ignoreCase)
+        {
+            if (value.Length == 0)
+                return startIndex;
+            if (sb.Length == 0 || count == 0 || startIndex + 1 + value.Length > sb.Length)
+                return -1;
+
+            int num3;
+            int length = value.Length;
+            int num2 = startIndex + count - value.Length;
+            if (!ignoreCase)
+            {
+                for (int i = startIndex; i <= num2; i++)
+                {
+                    if (sb[i] == value[0])
+                    {
+                        num3 = 1;
+                        while ((num3 < length) && (sb[i + num3] == value[num3]))
+                        {
+                            num3++;
+                        }
+
+                        if (num3 == length)
+                        {
+                            return i;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int j = startIndex; j <= num2; j++)
+                {
+                    if (char.ToLower(sb[j]) == char.ToLower(value[0]))
+                    {
+                        num3 = 1;
+                        while ((num3 < length) && (char.ToLower(sb[j + num3]) == char.ToLower(value[num3])))
+                        {
+                            num3++;
+                        }
+
+                        if (num3 == length)
+                        {
+                            return j;
+                        }
+                    }
+                }
+            }
+
             return -1;
         }
 
@@ -536,6 +787,17 @@ namespace System.Text
         /// </returns>
         /// <exception cref="ArgumentNullException">anyOf is null.</exception>
         public static int IndexOfAny(this StringBuilder sb, char[] anyOf)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (anyOf == null)
+                throw new ArgumentNullException(nameof(anyOf));
+
+            return sb.IndexOfAny(anyOf, 0, sb.Length);
+        }
+
+        /// <inheritdoc cref="IndexOfAny(StringBuilder, char[])"/>
+        public static int IndexOfAny(this StringBuilder sb, StringBuilder anyOf)
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
@@ -562,6 +824,21 @@ namespace System.Text
         /// than the number of characters in this instance.
         /// </exception>
         public static int IndexOfAny(this StringBuilder sb, char[] anyOf, int startIndex)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (anyOf == null)
+                throw new ArgumentNullException(nameof(anyOf));
+            if (sb.Length != 0 && startIndex < 0)
+                throw new ArgumentOutOfRangeException();
+            if (sb.Length != 0 && startIndex >= sb.Length)
+                throw new ArgumentOutOfRangeException();
+
+            return sb.IndexOfAny(anyOf, startIndex, sb.Length - startIndex);
+        }
+
+        /// <inheritdoc cref="IndexOfAny(StringBuilder, char[], int)"/>
+        public static int IndexOfAny(this StringBuilder sb, StringBuilder anyOf, int startIndex)
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
@@ -621,11 +898,41 @@ namespace System.Text
             return -1;
         }
 
+        /// <inheritdoc cref="IndexOfAny(StringBuilder, char[], int, int)"/>
+        public static int IndexOfAny(this StringBuilder sb, StringBuilder anyOf, int startIndex, int count)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (anyOf == null)
+                throw new ArgumentNullException(nameof(anyOf));
+            if (sb.Length != 0 && startIndex < 0)
+                throw new ArgumentOutOfRangeException();
+            if (sb.Length != 0 && startIndex >= sb.Length)
+                throw new ArgumentOutOfRangeException();
+            if (sb.Length != 0 && count < 0)
+                throw new ArgumentOutOfRangeException();
+            if (sb.Length != 0 && startIndex + count > sb.Length)
+                throw new ArgumentOutOfRangeException();
+
+            if (sb.Length == 0 || count == 0)
+                return -1;
+
+            for (int i = startIndex; i < startIndex + count; i++)
+            {
+                if (anyOf.Any(sb[i]))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         /// <summary>
         /// Reports the zero-based index of the last occurrence of the specified Unicode
         /// character within this instance.
         /// </summary>
-        /// <param name="sb">A <see cref="StringBuilder"/> to </param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">A Unicode character to seek.</param>
         /// <returns>
         /// The zero-based index position of <paramref name="value"/> if that character is found, or -1
@@ -713,15 +1020,15 @@ namespace System.Text
                     return i;
                 }
             }
+
             return -1;
         }
-
 
         /// <summary>
         /// Reports the zero-based index of the last occurrence of the specified string 
         /// in the current <see cref="StringBuilder"/> object.
         /// </summary>
-        /// <param name="sb">A <see cref="StringBuilder"/> to </param>
+        /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
@@ -740,9 +1047,32 @@ namespace System.Text
             {
                 if (sb.Length == 0)
                     return 0;
-                else
-                    return sb.Length - 1;
+
+                return sb.Length - 1;
             }
+
+            if (sb.Length == 0)
+                return -1;
+
+            return LastIndexOfInternal(sb, value, sb.Length - 1, sb.Length, ignoreCase);
+        }
+
+        /// <inheritdoc cref="LastIndexOf(StringBuilder,string,bool)"/>
+        public static int LastIndexOf(this StringBuilder sb, StringBuilder value, bool ignoreCase = false)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            if (value.Length == 0)
+            {
+                if (sb.Length == 0)
+                    return 0;
+
+                return sb.Length - 1;
+            }
+
             if (sb.Length == 0)
                 return -1;
 
@@ -762,6 +1092,21 @@ namespace System.Text
         /// or -1 if it is not. If value is <see cref="String.Empty"/>, the return value is startIndex.
         /// </returns>
         public static int LastIndexOf(this StringBuilder sb, string value, int startIndex, bool ignoreCase = false)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            if (startIndex < 0)
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+            if ((sb.Length != 0 || startIndex != 0) && startIndex >= sb.Length)
+                throw new ArgumentOutOfRangeException();
+
+            return LastIndexOfInternal(sb, value, startIndex, startIndex + 1, ignoreCase);
+        }
+
+        /// <inheritdoc cref="LastIndexOf(StringBuilder,string,int,bool)"/>
+        public static int LastIndexOf(this StringBuilder sb, StringBuilder value, int startIndex, bool ignoreCase = false)
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
@@ -798,9 +1143,28 @@ namespace System.Text
                 throw new ArgumentNullException(nameof(sb));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
-            if (!(startIndex >= 0))
+            if (startIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(startIndex));
-            if (!(count >= 0))
+            if (count < 0)
+                throw new ArgumentOutOfRangeException(nameof(count));
+            if (!((sb.Length == 0 && startIndex == 0) || startIndex < sb.Length))
+                throw new ArgumentOutOfRangeException();
+            if (!((sb.Length == 0 && startIndex == 0) || startIndex - count + 1 >= 0))
+                throw new ArgumentOutOfRangeException();
+
+            return LastIndexOfInternal(sb, value, startIndex, count, ignoreCase);
+        }
+
+        /// <inheritdoc cref="LastIndexOf(StringBuilder,string,int,int,bool)"/>
+        public static int LastIndexOf(this StringBuilder sb, StringBuilder value, int startIndex, int count, bool ignoreCase = false)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+            if (startIndex < 0)
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
+            if (count < 0)
                 throw new ArgumentOutOfRangeException(nameof(count));
             if (!((sb.Length == 0 && startIndex == 0) || startIndex < sb.Length))
                 throw new ArgumentOutOfRangeException();
@@ -821,7 +1185,7 @@ namespace System.Text
             int length = value.Length;
             int maxValueIndex = length - 1;
             int num2 = startIndex - count + value.Length;
-            if (ignoreCase == false)
+            if (!ignoreCase)
             {
                 for (int i = startIndex; i >= num2; i--)
                 {
@@ -832,6 +1196,7 @@ namespace System.Text
                         {
                             num3++;
                         }
+
                         if (num3 == length)
                         {
                             return i - num3 + 1;
@@ -850,6 +1215,7 @@ namespace System.Text
                         {
                             num3++;
                         }
+
                         if (num3 == length)
                         {
                             return j - num3 + 1;
@@ -857,8 +1223,63 @@ namespace System.Text
                     }
                 }
             }
+
             return -1;
         }
+
+        private static int LastIndexOfInternal(StringBuilder sb, StringBuilder value, int startIndex, int count, bool ignoreCase)
+        {
+            if (value.Length == 0)
+                return startIndex;
+            if (sb.Length == 0 || count == 0 || startIndex + 1 - count + value.Length > sb.Length)
+                return -1;
+
+            int num3;
+            int length = value.Length;
+            int maxValueIndex = length - 1;
+            int num2 = startIndex - count + value.Length;
+            if (!ignoreCase)
+            {
+                for (int i = startIndex; i >= num2; i--)
+                {
+                    if (sb[i] == value[maxValueIndex])
+                    {
+                        num3 = 1;
+                        while ((num3 < length) && (sb[i - num3] == value[maxValueIndex - num3]))
+                        {
+                            num3++;
+                        }
+
+                        if (num3 == length)
+                        {
+                            return i - num3 + 1;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int j = startIndex; j >= num2; j--)
+                {
+                    if (char.ToLower(sb[j]) == char.ToLower(value[maxValueIndex]))
+                    {
+                        num3 = 1;
+                        while ((num3 < length) && (char.ToLower(sb[j - num3]) == char.ToLower(value[maxValueIndex - num3])))
+                        {
+                            num3++;
+                        }
+
+                        if (num3 == length)
+                        {
+                            return j - num3 + 1;
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
         /// <summary>
         /// Reports the zero-based index of the last occurrence in this instance 
         /// of any character in a specified array of Unicode characters.
@@ -871,6 +1292,17 @@ namespace System.Text
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="anyOf"/> is null.</exception>
         public static int LastIndexOfAny(this StringBuilder sb, char[] anyOf)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (anyOf == null)
+                throw new ArgumentNullException(nameof(anyOf));
+
+            return sb.LastIndexOfAny(anyOf, sb.Length - 1, sb.Length);
+        }
+
+        /// <inheritdoc cref="LastIndexOfAny(StringBuilder, char[])"/>
+        public static int LastIndexOfAny(this StringBuilder sb, StringBuilder anyOf)
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
@@ -897,6 +1329,21 @@ namespace System.Text
         /// than the number of characters in this instance.
         /// </exception>
         public static int LastIndexOfAny(this StringBuilder sb, char[] anyOf, int startIndex)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (anyOf == null)
+                throw new ArgumentNullException(nameof(anyOf));
+            if (sb.Length != 0 && startIndex < 0)
+                throw new ArgumentOutOfRangeException();
+            if (sb.Length != 0 && startIndex >= sb.Length)
+                throw new ArgumentOutOfRangeException();
+
+            return sb.LastIndexOfAny(anyOf, startIndex, startIndex + 1);
+        }
+
+        /// <inheritdoc cref="LastIndexOfAny(StringBuilder, char[], int)"/>
+        public static int LastIndexOfAny(this StringBuilder sb, StringBuilder anyOf, int startIndex)
         {
             if (sb == null)
                 throw new ArgumentNullException(nameof(sb));
@@ -956,6 +1403,36 @@ namespace System.Text
             return -1;
         }
 
+        /// <inheritdoc cref="LastIndexOfAny(StringBuilder, char[], int, int)"/>
+        public static int LastIndexOfAny(this StringBuilder sb, StringBuilder anyOf, int startIndex, int count)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (anyOf == null)
+                throw new ArgumentNullException(nameof(anyOf));
+            if (!(sb.Length == 0 || startIndex >= 0))
+                throw new ArgumentOutOfRangeException();
+            if (!(sb.Length == 0 || startIndex < sb.Length))
+                throw new ArgumentOutOfRangeException();
+            if (!(sb.Length == 0 || count >= 0))
+                throw new ArgumentOutOfRangeException();
+            if (!(sb.Length == 0 || startIndex - count + 1 >= 0))
+                throw new ArgumentOutOfRangeException();
+
+            if (sb.Length == 0 || count == 0)
+                return -1;
+
+            for (int i = startIndex; i > startIndex - count; i--)
+            {
+                if (anyOf.Any(sb[i]))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         /// <summary>
         /// Determines whether this instance of <see cref="StringBuilder"/> starts with the specified string.
         /// </summary>
@@ -977,7 +1454,7 @@ namespace System.Text
             if (length > sb.Length)
                 return false;
 
-            if (ignoreCase == false)
+            if (!ignoreCase)
             {
                 for (int i = 0; i < length; i++)
                 {
@@ -997,6 +1474,43 @@ namespace System.Text
                     }
                 }
             }
+
+            return true;
+        }
+
+        /// <inheritdoc cref="StartsWith(StringBuilder, string, bool)"/>
+        public static bool StartsWith(this StringBuilder sb, StringBuilder value, bool ignoreCase = false)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            int length = value.Length;
+            if (length > sb.Length)
+                return false;
+
+            if (!ignoreCase)
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    if (sb[i] != value[i])
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                for (int j = 0; j < length; j++)
+                {
+                    if (char.ToLower(sb[j]) != char.ToLower(value[j]))
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return true;
         }
 
@@ -1023,7 +1537,7 @@ namespace System.Text
             if (length > sb.Length)
                 return false;
 
-            if (ignoreCase == false)
+            if (!ignoreCase)
             {
                 for (int i = 0; i < length; i++)
                 {
@@ -1043,6 +1557,45 @@ namespace System.Text
                     }
                 }
             }
+
+            return true;
+        }
+
+        /// <inheritdoc cref="EndsWith(StringBuilder, string, bool)"/>
+        public static bool EndsWith(this StringBuilder sb, StringBuilder value, bool ignoreCase = false)
+        {
+            if (sb == null)
+                throw new ArgumentNullException(nameof(sb));
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            int length = value.Length;
+            int maxSBIndex = sb.Length - 1;
+            int maxValueIndex = length - 1;
+            if (length > sb.Length)
+                return false;
+
+            if (!ignoreCase)
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    if (sb[maxSBIndex - i] != value[maxValueIndex - i])
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                for (int j = length - 1; j >= 0; j--)
+                {
+                    if (char.ToLower(sb[maxSBIndex - j]) != char.ToLower(value[maxValueIndex - j]))
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return true;
         }
 
@@ -1153,31 +1706,6 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Removes all occurrences of specified characters from <see cref="StringBuilder"/>.
-        /// </summary>
-        /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
-        /// <param name="removeChar">A Unicode character to remove.</param>
-        /// <returns>
-        /// Returns <see cref="StringBuilder"/> without specified Unicode characters.
-        /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="sb"/> is null.</exception>
-        public static StringBuilder Remove(this StringBuilder sb, char removeChar)
-        {
-            if (sb == null)
-                throw new ArgumentNullException(nameof(sb));
-
-            for (int i = 0; i < sb.Length;)
-            {
-                if (removeChar == sb[i])
-                    _ = sb.Remove(i, 1);
-                else
-                    i++;
-            }
-
-            return sb;
-        }
-
-        /// <summary>
         /// Removes all whitespace from <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
@@ -1204,13 +1732,35 @@ namespace System.Text
         /// <summary>
         /// Discard StringComparison to keep compatibility with <see cref="string.Replace(string, string)"/>
         /// </summary>
+#pragma warning disable IDE0060 // Remove unused parameter
         public static StringBuilder Replace(this StringBuilder stringBuilder, string oldValue, string newValue,
             StringComparison comparisonType)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             return stringBuilder.Replace(oldValue, newValue);
         }
 
         public static StringBuilder Replace(this StringBuilder stringBuilder, string oldValue, int newValue,
+            bool ignoreCase = false)
+        {
+            int oldValueLength = oldValue?.Length ?? 0;
+            if (oldValueLength == 0)
+                return stringBuilder;
+
+            int index = stringBuilder.IndexOf(oldValue, ignoreCase);
+            while (index != -1)
+            {
+                _ = stringBuilder.Remove(index, oldValueLength);
+                _ = stringBuilder.Insert(index, newValue);
+
+                index = stringBuilder.IndexOf(oldValue, ignoreCase);
+            }
+
+            return stringBuilder;
+        }
+
+        /// <inheritdoc cref="Replace(StringBuilder, string, int, bool)"/>
+        public static StringBuilder Replace(this StringBuilder stringBuilder, StringBuilder oldValue, int newValue,
             bool ignoreCase = false)
         {
             int oldValueLength = oldValue?.Length ?? 0;
@@ -1240,7 +1790,7 @@ namespace System.Text
         /// </summary>
         /// <param name="comparisonType">A <see cref="StringComparison"/> enum.</param>
         /// <returns>True if <paramref name="comparisonType"/> ignores case.</returns>
-        static bool IgnoreCase(StringComparison comparisonType = default)
+        private static bool IgnoreCase(StringComparison comparisonType = default)
         {
             return System.Runtime.CompilerServices.Unsafe.As<StringComparison, int>(ref comparisonType) % 2 != 0;
         }
@@ -1251,7 +1801,19 @@ namespace System.Text
             return stringBuilder.IndexOf(value, IgnoreCase(comparisonType)) >= 0;
         }
 
+        public static bool Contains(this StringBuilder stringBuilder, StringBuilder value,
+            StringComparison comparisonType)
+        {
+            return stringBuilder.IndexOf(value, IgnoreCase(comparisonType)) >= 0;
+        }
+
         public static bool Contains(this StringBuilder stringBuilder, string value,
+            bool ignoreCase = false)
+        {
+            return stringBuilder.IndexOf(value, ignoreCase) >= 0;
+        }
+
+        public static bool Contains(this StringBuilder stringBuilder, StringBuilder value,
             bool ignoreCase = false)
         {
             return stringBuilder.IndexOf(value, ignoreCase) >= 0;
