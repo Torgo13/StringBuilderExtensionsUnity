@@ -2128,11 +2128,25 @@ namespace System.Text
         }
         #endregion // Replace
 
+        public static StringBuilder Shift(this StringBuilder stringBuilder, int index, int offset)
+        {
+            stringBuilder.Length += offset;
+            
+            for (int i = 1; i <= index; i++)
+            {
+                stringBuilder[^i] = stringBuilder[^(i + offset)];
+            }
+
+            return stringBuilder;
+        }
+
         public static StringBuilder Insert(this StringBuilder stringBuilder, int index, ref StringBuilder value)
         {
+            _ = stringBuilder.Shift(index, value.Length);
+
             for (int i = value.Length - 1; i >= 0; --i)
             {
-                _ = stringBuilder.Insert(index, value[i]);
+                stringBuilder[i + index] = value[i];
             }
 
             return stringBuilder;
@@ -2152,10 +2166,7 @@ namespace System.Text
             }
             else if (length < valueLength)
             {
-                for (int i = valueLength - 1; i >= valueLength - length; --i)
-                {
-                    _ = stringBuilder.Insert(index + length, value[i]);
-                }
+                _ = stringBuilder.Insert(index, ref value);
             }
 
             return stringBuilder;
