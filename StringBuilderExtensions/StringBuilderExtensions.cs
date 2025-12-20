@@ -2126,6 +2126,42 @@ namespace System.Text
 
             return stringBuilder;
         }
+
+        public static StringBuilder Replace(this StringBuilder stringBuilder, string oldValue, ref StringBuilder newValue,
+            bool ignoreCase = false)
+        {
+            int oldValueLength = oldValue?.Length ?? 0;
+            if (oldValueLength == 0)
+                return stringBuilder;
+
+            int index = stringBuilder.IndexOf(oldValue, ignoreCase);
+            while (index != -1)
+            {
+                _ = stringBuilder.Replace(index, oldValueLength, ref newValue);
+
+                index = stringBuilder.IndexOf(oldValue, ignoreCase);
+            }
+
+            return stringBuilder;
+        }
+
+        public static StringBuilder Replace(this StringBuilder stringBuilder, ref StringBuilder oldValue, string newValue,
+            bool ignoreCase = false)
+        {
+            int oldValueLength = oldValue?.Length ?? 0;
+            if (oldValueLength == 0)
+                return stringBuilder;
+
+            int index = stringBuilder.IndexOf(ref oldValue, ignoreCase);
+            while (index != -1)
+            {
+                _ = stringBuilder.Replace(index, oldValueLength, newValue);
+
+                index = stringBuilder.IndexOf(ref oldValue, ignoreCase);
+            }
+
+            return stringBuilder;
+        }
         #endregion // Replace
 
         public static StringBuilder Shift(this StringBuilder stringBuilder, int index, int offset)
@@ -2167,6 +2203,26 @@ namespace System.Text
             else if (length < valueLength)
             {
                 _ = stringBuilder.Insert(index, ref value);
+            }
+
+            return stringBuilder;
+        }
+
+        public static StringBuilder Replace(this StringBuilder stringBuilder, int index, int length, string value)
+        {
+            int valueLength = value.Length;
+            for (int i = 0, replaceLength = Math.Min(length, valueLength); i < replaceLength; i++)
+            {
+                stringBuilder[i + index] = value[i];
+            }
+
+            if (length > valueLength)
+            {
+                _ = stringBuilder.Remove(index + valueLength, length - valueLength);
+            }
+            else if (length < valueLength)
+            {
+                _ = stringBuilder.Insert(index, value);
             }
 
             return stringBuilder;
