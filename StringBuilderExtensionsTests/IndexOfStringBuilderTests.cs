@@ -1,17 +1,18 @@
 using NUnit.Framework;
+using static System.Text.Tests.TestStrings;
 
 namespace System.Text.Tests
 {
     [TestFixture]
     public class IndexOfStringBuilderTests
     {
-        private static readonly string correctStringToSearch1 = string.Concat(TestStrings.Searched, TestStrings.Composition2, TestStrings.Searched, TestStrings.Composition1);
-        private static readonly string correctStringToSearch2 = string.Concat(TestStrings.Composition2, TestStrings.Composition1, TestStrings.Searched);
-        private static readonly string correctStringToSearchUpperCase1 = string.Concat(TestStrings.Searched.ToUpper(), TestStrings.Composition1, TestStrings.Searched, TestStrings.Composition2);
-        private static readonly string correctStringToSearchUpperCase2 = string.Concat(TestStrings.Composition2, TestStrings.Composition1, TestStrings.Searched.ToUpper());
-        private static readonly string incorrectStringToSearch = string.Concat(TestStrings.Composition1, TestStrings.Composition2);
-        private static readonly string correctSmallStringToSearch = string.Concat(TestStrings.Searched.Substring(10), TestStrings.Composition1.Substring(10));
-        private static readonly string incorrectSmallStringToSearch = TestStrings.Composition1;
+        private static readonly string correctStringToSearch1 = string.Concat(Searched, Composition2, Searched, Composition1);
+        private static readonly string correctStringToSearch2 = string.Concat(Composition2, Composition1, Searched);
+        private static readonly string correctStringToSearchUpperCase1 = string.Concat(Searched.ToUpper(), Composition1, Searched, Composition2);
+        private static readonly string correctStringToSearchUpperCase2 = string.Concat(Composition2, Composition1, Searched.ToUpper());
+        private static readonly string incorrectStringToSearch = string.Concat(Composition1, Composition2);
+        private static readonly string correctSmallStringToSearch = string.Concat(Searched.Substring(10), Composition1.Substring(10));
+        private static readonly string incorrectSmallStringToSearch = Composition1;
 
 
         [Test]
@@ -19,15 +20,15 @@ namespace System.Text.Tests
         {
             StringBuilder sb;
             sb = new StringBuilder(correctStringToSearch1);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched), correctStringToSearch1.IndexOf(TestStrings.Searched));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3), correctStringToSearch1.IndexOf(TestStrings.Searched, 3));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, 55), correctStringToSearch1.IndexOf(TestStrings.Searched, 3, 55));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, 57), correctStringToSearch1.IndexOf(TestStrings.Searched, 3, 57));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched), correctStringToSearch1.IndexOf(Searched));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3), correctStringToSearch1.IndexOf(Searched, 3));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, 55), correctStringToSearch1.IndexOf(Searched, 3, 55));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, 57), correctStringToSearch1.IndexOf(Searched, 3, 57));
             int count = correctStringToSearch2.Length - 3;
             sb = new StringBuilder(correctStringToSearch2);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched), correctStringToSearch2.IndexOf(TestStrings.Searched));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3), correctStringToSearch2.IndexOf(TestStrings.Searched, 3));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, count), correctStringToSearch2.IndexOf(TestStrings.Searched, 3, count));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched), correctStringToSearch2.IndexOf(Searched));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3), correctStringToSearch2.IndexOf(Searched, 3));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, count), correctStringToSearch2.IndexOf(Searched, 3, count));
         }
 
         [Test]
@@ -35,15 +36,15 @@ namespace System.Text.Tests
         {
             StringBuilder sb;
             sb = new StringBuilder(correctStringToSearchUpperCase1);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, true), correctStringToSearchUpperCase1.IndexOf(TestStrings.Searched, StringComparison.CurrentCultureIgnoreCase));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, true), correctStringToSearchUpperCase1.IndexOf(TestStrings.Searched, 3, StringComparison.CurrentCultureIgnoreCase));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, 55, true), correctStringToSearchUpperCase1.IndexOf(TestStrings.Searched, 3, 55, StringComparison.CurrentCultureIgnoreCase));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, 57, true), correctStringToSearchUpperCase1.IndexOf(TestStrings.Searched, 3, 57, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, true), correctStringToSearchUpperCase1.IndexOf(Searched, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, true), correctStringToSearchUpperCase1.IndexOf(Searched, 3, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, 55, true), correctStringToSearchUpperCase1.IndexOf(Searched, 3, 55, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, 57, true), correctStringToSearchUpperCase1.IndexOf(Searched, 3, 57, StringComparison.CurrentCultureIgnoreCase));
             int count = correctStringToSearchUpperCase2.Length - 3;
             sb = new StringBuilder(correctStringToSearchUpperCase2);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, true), correctStringToSearchUpperCase2.IndexOf(TestStrings.Searched, StringComparison.CurrentCultureIgnoreCase));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, true), correctStringToSearchUpperCase2.IndexOf(TestStrings.Searched, 3, StringComparison.CurrentCultureIgnoreCase));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, count, true), correctStringToSearchUpperCase2.IndexOf(TestStrings.Searched, 3, count, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, true), correctStringToSearchUpperCase2.IndexOf(Searched, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, true), correctStringToSearchUpperCase2.IndexOf(Searched, 3, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, count, true), correctStringToSearchUpperCase2.IndexOf(Searched, 3, count, StringComparison.CurrentCultureIgnoreCase));
         }
 
         [Test]
@@ -51,26 +52,26 @@ namespace System.Text.Tests
         {
             StringBuilder sb;
             sb = new StringBuilder(incorrectStringToSearch);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched), incorrectStringToSearch.IndexOf(TestStrings.Searched));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched), incorrectStringToSearch.IndexOf(Searched));
             sb = new StringBuilder(incorrectStringToSearch);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3), incorrectStringToSearch.IndexOf(TestStrings.Searched, 3));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3), incorrectStringToSearch.IndexOf(Searched, 3));
             sb = new StringBuilder(incorrectStringToSearch);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, 32), incorrectStringToSearch.IndexOf(TestStrings.Searched, 3, 32));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, 32), incorrectStringToSearch.IndexOf(Searched, 3, 32));
         }
 
         [Test]
         public void TestNotContainingCharactersIgnoreCase()
         {
-            string testStringsSearchedToUpper = TestStrings.Searched.ToUpper();
+            string testStringsSearchedToUpper = Searched.ToUpper();
             StringBuilder test = new StringBuilder(testStringsSearchedToUpper);
 
             StringBuilder sb;
             sb = new StringBuilder(incorrectStringToSearch);
-            Assert.AreEqual(sb.IndexOf(ref test, true), incorrectStringToSearch.IndexOf(testStringsSearchedToUpper, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(test, true), incorrectStringToSearch.IndexOf(testStringsSearchedToUpper, StringComparison.CurrentCultureIgnoreCase));
             sb = new StringBuilder(incorrectStringToSearch);
-            Assert.AreEqual(sb.IndexOf(ref test, 3, true), incorrectStringToSearch.IndexOf(testStringsSearchedToUpper, 3, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(test, 3, true), incorrectStringToSearch.IndexOf(testStringsSearchedToUpper, 3, StringComparison.CurrentCultureIgnoreCase));
             sb = new StringBuilder(incorrectStringToSearch);
-            Assert.AreEqual(sb.IndexOf(ref test, 3, 32, true), incorrectStringToSearch.IndexOf(testStringsSearchedToUpper, 3, 32, StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(sb.IndexOf(test, 3, 32, true), incorrectStringToSearch.IndexOf(testStringsSearchedToUpper, 3, 32, StringComparison.CurrentCultureIgnoreCase));
         }
 
         [Test]
@@ -80,7 +81,7 @@ namespace System.Text.Tests
             {
                 StringBuilder sb = new StringBuilder();
                 StringBuilder test = default;
-                sb.IndexOf(ref test);
+                sb.IndexOf(test);
             }
             );
         }
@@ -92,7 +93,7 @@ namespace System.Text.Tests
             {
                 StringBuilder sb = new StringBuilder();
                 StringBuilder test = default;
-                sb.IndexOf(ref test, 3);
+                sb.IndexOf(test, 3);
             }
             );
         }
@@ -104,7 +105,7 @@ namespace System.Text.Tests
             {
                 StringBuilder sb = new StringBuilder();
                 StringBuilder test = default;
-                sb.IndexOf(ref test, 3, 55);
+                sb.IndexOf(test, 3, 55);
             }
             );
         }
@@ -115,11 +116,11 @@ namespace System.Text.Tests
             StringBuilder sb;
             sb = new StringBuilder();
             StringBuilder empty = new StringBuilder();
-            Assert.AreEqual(sb.IndexOf(ref empty), string.Empty.IndexOf(string.Empty));
+            Assert.AreEqual(sb.IndexOf(empty), string.Empty.IndexOf(string.Empty));
             sb = new StringBuilder(correctStringToSearch1);
-            Assert.AreEqual(sb.IndexOf(ref empty), correctStringToSearch1.IndexOf(string.Empty));
-            Assert.AreEqual(sb.IndexOf(ref empty, 3), correctStringToSearch1.IndexOf(string.Empty, 3));
-            Assert.AreEqual(sb.IndexOf(ref empty, 3, 55), correctStringToSearch1.IndexOf(string.Empty, 3, 55));
+            Assert.AreEqual(sb.IndexOf(empty), correctStringToSearch1.IndexOf(string.Empty));
+            Assert.AreEqual(sb.IndexOf(empty, 3), correctStringToSearch1.IndexOf(string.Empty, 3));
+            Assert.AreEqual(sb.IndexOf(empty, 3, 55), correctStringToSearch1.IndexOf(string.Empty, 3, 55));
         }
 
         [Test]
@@ -129,7 +130,7 @@ namespace System.Text.Tests
             {
                 StringBuilder sb = new StringBuilder();
                 StringBuilder empty = new StringBuilder();
-                sb.IndexOf(ref empty, 3);
+                sb.IndexOf(empty, 3);
             }
             );
         }
@@ -141,7 +142,7 @@ namespace System.Text.Tests
             {
                 StringBuilder sb = new StringBuilder();
                 StringBuilder empty = new StringBuilder();
-                sb.IndexOf(ref empty, 3, 55);
+                sb.IndexOf(empty, 3, 55);
             }
             );
         }
@@ -150,27 +151,27 @@ namespace System.Text.Tests
         public void TestValueLengthGreaterThanStringBuilderLengthContaining()
         {
             StringBuilder sb = new StringBuilder(correctSmallStringToSearch);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched), correctSmallStringToSearch.IndexOf(TestStrings.Searched));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3), correctSmallStringToSearch.IndexOf(TestStrings.Searched, 3));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, 12), correctSmallStringToSearch.IndexOf(TestStrings.Searched, 3, 12));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched), correctSmallStringToSearch.IndexOf(Searched));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3), correctSmallStringToSearch.IndexOf(Searched, 3));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, 12), correctSmallStringToSearch.IndexOf(Searched, 3, 12));
         }
 
         [Test]
         public void TestValueLengthGreaterThanStringBuilderLengthNotContaining()
         {
             StringBuilder sb = new StringBuilder(incorrectSmallStringToSearch);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched), incorrectSmallStringToSearch.IndexOf(TestStrings.Searched));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3), incorrectSmallStringToSearch.IndexOf(TestStrings.Searched, 3));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 3, 12), incorrectSmallStringToSearch.IndexOf(TestStrings.Searched, 3, 12));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched), incorrectSmallStringToSearch.IndexOf(Searched));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3), incorrectSmallStringToSearch.IndexOf(Searched, 3));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 3, 12), incorrectSmallStringToSearch.IndexOf(Searched, 3, 12));
         }
 
         [Test]
         public void TestEmptyStringBuilder()
         {
             StringBuilder sb = new StringBuilder();
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched), string.Empty.IndexOf(TestStrings.Searched));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 0), string.Empty.IndexOf(TestStrings.Searched, 0));
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, 0, 0), string.Empty.IndexOf(TestStrings.Searched, 0, 0));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched), string.Empty.IndexOf(Searched));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 0), string.Empty.IndexOf(Searched, 0));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, 0, 0), string.Empty.IndexOf(Searched, 0, 0));
         }
 
         [Test]
@@ -179,7 +180,7 @@ namespace System.Text.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder();
-                sb.IndexOf(ref TestStringBuilders.Searched, 3);
+                sb.IndexOf(TestStringBuilders.Searched, 3);
             }
             );
         }
@@ -190,7 +191,7 @@ namespace System.Text.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder();
-                sb.IndexOf(ref TestStringBuilders.Searched, 3, 55);
+                sb.IndexOf(TestStringBuilders.Searched, 3, 55);
             }
             );
         }
@@ -199,10 +200,10 @@ namespace System.Text.Tests
         public void TestIndexLastCharacter()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.ToIndexOfChars1);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, sb.Length - 1), TestStrings.ToIndexOfChars1.IndexOf(TestStrings.Searched, sb.Length - 1));
+            sb = new StringBuilder(ToIndexOfChars1);
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, sb.Length - 1), ToIndexOfChars1.IndexOf(Searched, sb.Length - 1));
             sb = new StringBuilder(correctStringToSearch1);
-            Assert.AreEqual(sb.IndexOf(ref TestStringBuilders.Searched, sb.Length - 1), correctStringToSearch1.IndexOf(TestStrings.Searched, sb.Length - 1));
+            Assert.AreEqual(sb.IndexOf(TestStringBuilders.Searched, sb.Length - 1), correctStringToSearch1.IndexOf(Searched, sb.Length - 1));
         }
 
         [Test]
@@ -210,8 +211,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.ToIndexOfChars1);
-                sb.IndexOf(ref TestStringBuilders.Searched, sb.Length);
+                StringBuilder sb = new StringBuilder(ToIndexOfChars1);
+                sb.IndexOf(TestStringBuilders.Searched, sb.Length);
             }
             );
         }
@@ -222,7 +223,7 @@ namespace System.Text.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 StringBuilder sb = new StringBuilder(correctStringToSearch1);
-                sb.IndexOf(ref TestStringBuilders.Searched, sb.Length);
+                sb.IndexOf(TestStringBuilders.Searched, sb.Length);
             }
             );
         }
@@ -232,8 +233,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.IndexOf(ref TestStringBuilders.Searched, -1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.IndexOf(TestStringBuilders.Searched, -1);
             }
             );
         }
@@ -243,8 +244,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.IndexOf(ref TestStringBuilders.Searched, -1, 5);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.IndexOf(TestStringBuilders.Searched, -1, 5);
             }
             );
         }
@@ -254,8 +255,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.IndexOf(ref TestStringBuilders.Searched, sb.Length + 1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.IndexOf(TestStringBuilders.Searched, sb.Length + 1);
             }
             );
         }
@@ -265,8 +266,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.IndexOf(ref TestStringBuilders.Searched, sb.Length + 1, 5);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.IndexOf(TestStringBuilders.Searched, sb.Length + 1, 5);
             }
             );
         }
@@ -276,8 +277,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.IndexOf(ref TestStringBuilders.Searched, 0, -1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.IndexOf(TestStringBuilders.Searched, 0, -1);
             }
             );
         }
@@ -287,8 +288,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.IndexOf(ref TestStringBuilders.Searched, -1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.IndexOf(TestStringBuilders.Searched, -1);
             }
             );
         }
@@ -298,8 +299,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.IndexOf(ref TestStringBuilders.Searched, 0, sb.Length + 1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.IndexOf(TestStringBuilders.Searched, 0, sb.Length + 1);
             }
             );
         }
@@ -309,8 +310,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.IndexOf(ref TestStringBuilders.Searched, 5, 20);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.IndexOf(TestStringBuilders.Searched, 5, 20);
             }
             );
         }

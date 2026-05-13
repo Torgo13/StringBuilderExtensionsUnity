@@ -23,6 +23,8 @@
         internal static readonly string Searched = "mfsd42(*#D$#@cder23?"; // 20 symbols
         internal static readonly string Composition1 = "sfreewfr3c 4vtc"; // 15 symbols
         internal static readonly string Composition2 = "(dx D!@DWE 9&53 sr;'"; // 20 symbols
+
+        internal static readonly string Null = null;
     }
 
     static class TestStringBuilders
@@ -48,5 +50,7 @@
         internal static StringBuilder Searched = new StringBuilder("mfsd42(*#D$#@cder23?"); // 20 symbols
         internal static StringBuilder Composition1 = new StringBuilder("sfreewfr3c 4vtc"); // 15 symbols
         internal static StringBuilder Composition2 = new StringBuilder("(dx D!@DWE 9&53 sr;'"); // 20 symbols
+		
+        internal static StringBuilder Null = null;
     }
 }

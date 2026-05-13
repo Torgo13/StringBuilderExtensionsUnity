@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using static System.Text.Tests.TestStrings;
 
 namespace System.Text.Tests
 {
@@ -10,17 +11,17 @@ namespace System.Text.Tests
         {
             StringBuilder sb;
             StringBuilder test = new StringBuilder(" ");
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingWhiteSpaces).Remove(ref TestStringBuilders.SymbolsToTrim);
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingWhiteSpaces);
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingSymbols).Remove(ref test);
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingSymbols);
+            sb = new StringBuilder(LeadingAndTrailingWhiteSpaces).Remove(TestStringBuilders.SymbolsToTrim);
+            Assert.AreEqual(sb.ToString(), LeadingAndTrailingWhiteSpaces);
+            sb = new StringBuilder(LeadingAndTrailingSymbols).Remove(test);
+            Assert.AreEqual(sb.ToString(), LeadingAndTrailingSymbols);
         }
 
         [Test]
         public void TestEmpty()
         {
             StringBuilder test = new StringBuilder(" ");
-            StringBuilder sb = new StringBuilder().Remove(ref test);
+            StringBuilder sb = new StringBuilder().Remove(test);
             Assert.AreEqual(sb.ToString(), string.Empty);
         }
 
@@ -30,7 +31,7 @@ namespace System.Text.Tests
             Assert.Throws<ArgumentNullException>(() =>
             {
                 StringBuilder test = default;
-                StringBuilder sb = new StringBuilder().Remove(ref test);
+                StringBuilder sb = new StringBuilder().Remove(test);
             }
             );
         }
@@ -46,7 +47,7 @@ namespace System.Text.Tests
             StringBuilder removeChar = new StringBuilder("a");
 
             // Act
-            sb.Remove(ref removeChar);
+            sb.Remove(removeChar);
 
             // Assert
             Assert.AreEqual(string.Empty, sb.ToString());
@@ -63,7 +64,7 @@ namespace System.Text.Tests
             StringBuilder removeChar = new StringBuilder("b");
 
             // Act
-            sb.Remove(ref removeChar);
+            sb.Remove(removeChar);
 
             // Assert
             Assert.AreEqual("ac", sb.ToString());
@@ -80,7 +81,7 @@ namespace System.Text.Tests
             StringBuilder removeChar = new StringBuilder("a");
 
             // Act
-            sb.Remove(ref removeChar);
+            sb.Remove(removeChar);
 
             // Assert
             Assert.AreEqual("bnn", sb.ToString());
@@ -97,7 +98,7 @@ namespace System.Text.Tests
             StringBuilder removeChar = new StringBuilder("z");
 
             // Act
-            sb.Remove(ref removeChar);
+            sb.Remove(removeChar);
 
             // Assert
             Assert.AreEqual("hello", sb.ToString());
@@ -114,7 +115,7 @@ namespace System.Text.Tests
             StringBuilder removeChar = new StringBuilder("a");
 
             // Act
-            sb.Remove(ref removeChar);
+            sb.Remove(removeChar);
 
             // Assert
             Assert.AreEqual("bbb", sb.ToString());
@@ -131,7 +132,7 @@ namespace System.Text.Tests
             StringBuilder removeChar = new StringBuilder("x");
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => sb.Remove(ref removeChar));
+            Assert.Throws<ArgumentNullException>(() => sb.Remove(removeChar));
         }
 
         /// <summary>
@@ -145,7 +146,7 @@ namespace System.Text.Tests
             StringBuilder removeChar = new StringBuilder("\0"); // Null character
 
             // Act
-            sb.Remove(ref removeChar);
+            sb.Remove(removeChar);
 
             // Assert
             Assert.AreEqual("empty test", sb.ToString());
@@ -162,7 +163,7 @@ namespace System.Text.Tests
             StringBuilder removeChar = new StringBuilder("è");
 
             // Act
-            sb.Remove(ref removeChar);
+            sb.Remove(removeChar);
 
             // Assert
             Assert.AreEqual("caf ☕", sb.ToString());
@@ -177,7 +178,7 @@ namespace System.Text.Tests
             int newValue = 123;
 
             // Act
-            sb.Replace(ref oldValue, newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("Hello, 123!", sb.ToString());
@@ -192,7 +193,7 @@ namespace System.Text.Tests
             int newValue = 456;
 
             // Act
-            sb.Replace(ref oldValue, newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("456 456 456!", sb.ToString());
@@ -207,7 +208,7 @@ namespace System.Text.Tests
             int newValue = 789;
 
             // Act
-            sb.Replace(ref oldValue, newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("Hello, World!", sb.ToString());
@@ -222,7 +223,7 @@ namespace System.Text.Tests
             int newValue = 987;
 
             // Act
-            sb.Replace(ref oldValue, newValue, ignoreCase: true);
+            sb.Replace(oldValue, newValue, ignoreCase: true);
 
             // Assert
             Assert.AreEqual("Hello, 987!", sb.ToString());
@@ -237,7 +238,7 @@ namespace System.Text.Tests
             int newValue = 654;
 
             // Act
-            sb.Replace(ref oldValue, newValue, ignoreCase: true);
+            sb.Replace(oldValue, newValue, ignoreCase: true);
 
             // Assert
             Assert.AreEqual("654 654 654!", sb.ToString());
@@ -252,7 +253,7 @@ namespace System.Text.Tests
             int newValue = 42;
 
             // Act
-            sb.Replace(ref oldValue, newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual(string.Empty, sb.ToString());
@@ -267,7 +268,7 @@ namespace System.Text.Tests
             int newValue = 99;
 
             // Act
-            sb.Replace(ref oldValue, newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("Some content", sb.ToString());
@@ -282,7 +283,7 @@ namespace System.Text.Tests
             int newValue = 123;
 
             // Act
-            sb.Replace(ref oldValue, newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("Null test", sb.ToString());
@@ -297,7 +298,7 @@ namespace System.Text.Tests
             int newValue = 456;
 
             // Act
-            sb.Replace(ref oldValue, newValue, ignoreCase: true);
+            sb.Replace(oldValue, newValue, ignoreCase: true);
 
             // Assert
             Assert.AreEqual("Not here!", sb.ToString());
@@ -312,7 +313,7 @@ namespace System.Text.Tests
             StringBuilder newValue = new StringBuilder("123");
 
             // Act
-            sb.Replace(ref oldValue, ref newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("Hello, 123!", sb.ToString());
@@ -327,7 +328,7 @@ namespace System.Text.Tests
             StringBuilder newValue = new StringBuilder("456");
 
             // Act
-            sb.Replace(ref oldValue, ref newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("456 456 456!", sb.ToString());
@@ -342,7 +343,7 @@ namespace System.Text.Tests
             StringBuilder newValue = new StringBuilder("789");
 
             // Act
-            sb.Replace(ref oldValue, ref newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("Hello, World!", sb.ToString());
@@ -357,7 +358,7 @@ namespace System.Text.Tests
             StringBuilder newValue = new StringBuilder("987");
 
             // Act
-            sb.Replace(ref oldValue, ref newValue, ignoreCase: true);
+            sb.Replace(oldValue, newValue, ignoreCase: true);
 
             // Assert
             Assert.AreEqual("Hello, 987!", sb.ToString());
@@ -372,7 +373,7 @@ namespace System.Text.Tests
             StringBuilder newValue = new StringBuilder("654");
 
             // Act
-            sb.Replace(ref oldValue, ref newValue, ignoreCase: true);
+            sb.Replace(oldValue, newValue, ignoreCase: true);
 
             // Assert
             Assert.AreEqual("654 654 654!", sb.ToString());
@@ -387,7 +388,7 @@ namespace System.Text.Tests
             StringBuilder newValue = new StringBuilder("42");
 
             // Act
-            sb.Replace(ref oldValue, ref newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual(string.Empty, sb.ToString());
@@ -402,7 +403,7 @@ namespace System.Text.Tests
             StringBuilder newValue = new StringBuilder("99");
 
             // Act
-            sb.Replace(ref oldValue, ref newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("Some content", sb.ToString());
@@ -417,7 +418,7 @@ namespace System.Text.Tests
             StringBuilder newValue = new StringBuilder("123");
 
             // Act
-            sb.Replace(ref oldValue, ref newValue, ignoreCase: false);
+            sb.Replace(oldValue, newValue, ignoreCase: false);
 
             // Assert
             Assert.AreEqual("Null test", sb.ToString());
@@ -432,7 +433,7 @@ namespace System.Text.Tests
             StringBuilder newValue = new StringBuilder("456");
 
             // Act
-            sb.Replace(ref oldValue, ref newValue, ignoreCase: true);
+            sb.Replace(oldValue, newValue, ignoreCase: true);
 
             // Assert
             Assert.AreEqual("Not here!", sb.ToString());

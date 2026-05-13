@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using static System.Text.Tests.TestStrings;
 
 namespace System.Text.Tests
 {
@@ -9,15 +10,15 @@ namespace System.Text.Tests
         public void TestContainingCharacters()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.ToIndexOfChars1);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars1);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.Contains(symbol), TestStrings.ToIndexOfChars1.Contains(symbol));
+                Assert.AreEqual(sb.Contains(symbol), ToIndexOfChars1.Contains(symbol));
             }
-            sb = new StringBuilder(TestStrings.ToIndexOfChars2);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars2);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.Contains(symbol), TestStrings.ToIndexOfChars2.Contains(symbol));
+                Assert.AreEqual(sb.Contains(symbol), ToIndexOfChars2.Contains(symbol));
             }
         }
 
@@ -25,10 +26,10 @@ namespace System.Text.Tests
         public void TestNotContainingCharacters()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingWhiteSpaces);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(LeadingAndTrailingWhiteSpaces);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.Contains(symbol), TestStrings.LeadingAndTrailingWhiteSpaces.Contains(symbol));
+                Assert.AreEqual(sb.Contains(symbol), LeadingAndTrailingWhiteSpaces.Contains(symbol));
             }
         }
 
@@ -36,7 +37,7 @@ namespace System.Text.Tests
         public void TestEmpty()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            foreach (char symbol in SymbolsToTrim)
             {
                 Assert.AreEqual(sb.Contains(symbol), false);
             }

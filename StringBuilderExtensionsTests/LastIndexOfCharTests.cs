@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using static System.Text.Tests.TestStrings;
 
 namespace System.Text.Tests
 {
@@ -9,25 +10,25 @@ namespace System.Text.Tests
         public void TestContainingCharacters()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.ToIndexOfChars1);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars1);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.LastIndexOf(symbol), TestStrings.ToIndexOfChars1.LastIndexOf(symbol));
+                Assert.AreEqual(sb.LastIndexOf(symbol), ToIndexOfChars1.LastIndexOf(symbol));
             }
-            sb = new StringBuilder(TestStrings.ToIndexOfChars2);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars2);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.LastIndexOf(symbol), TestStrings.ToIndexOfChars2.LastIndexOf(symbol));
+                Assert.AreEqual(sb.LastIndexOf(symbol), ToIndexOfChars2.LastIndexOf(symbol));
             }
-            sb = new StringBuilder(TestStrings.ToIndexOfChars2);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars2);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.LastIndexOf(symbol, 22), TestStrings.ToIndexOfChars2.LastIndexOf(symbol, 22));
+                Assert.AreEqual(sb.LastIndexOf(symbol, 22), ToIndexOfChars2.LastIndexOf(symbol, 22));
             }
-            sb = new StringBuilder(TestStrings.ToIndexOfChars2);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars2);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.LastIndexOf(symbol, 22, 7), TestStrings.ToIndexOfChars2.LastIndexOf(symbol, 22, 7));
+                Assert.AreEqual(sb.LastIndexOf(symbol, 22, 7), ToIndexOfChars2.LastIndexOf(symbol, 22, 7));
             }
         }
 
@@ -35,20 +36,20 @@ namespace System.Text.Tests
         public void TestNotContainingCharacters()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingWhiteSpaces);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(LeadingAndTrailingWhiteSpaces);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.LastIndexOf(symbol), TestStrings.LeadingAndTrailingWhiteSpaces.LastIndexOf(symbol));
+                Assert.AreEqual(sb.LastIndexOf(symbol), LeadingAndTrailingWhiteSpaces.LastIndexOf(symbol));
             }
-            sb = new StringBuilder(TestStrings.ToIndexOfChars1);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars1);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.LastIndexOf(symbol, 23), TestStrings.ToIndexOfChars1.LastIndexOf(symbol, 23));
+                Assert.AreEqual(sb.LastIndexOf(symbol, 23), ToIndexOfChars1.LastIndexOf(symbol, 23));
             }
-            sb = new StringBuilder(TestStrings.ToIndexOfChars2);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars2);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.LastIndexOf(symbol, 22, 4), TestStrings.ToIndexOfChars2.LastIndexOf(symbol, 22, 4));
+                Assert.AreEqual(sb.LastIndexOf(symbol, 22, 4), ToIndexOfChars2.LastIndexOf(symbol, 22, 4));
             }
         }
 
@@ -56,15 +57,15 @@ namespace System.Text.Tests
         public void TestEmpty()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            foreach (char symbol in SymbolsToTrim)
             {
                 Assert.AreEqual(sb.LastIndexOf(symbol), -1);
             }
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            foreach (char symbol in SymbolsToTrim)
             {
                 Assert.AreEqual(sb.LastIndexOf(symbol, 22), -1);
             }
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            foreach (char symbol in SymbolsToTrim)
             {
                 Assert.AreEqual(sb.LastIndexOf(symbol, 22, 7), -1);
             }
@@ -74,15 +75,15 @@ namespace System.Text.Tests
         public void TestIndexFirstCharacter()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.ToIndexOfChars1);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars1);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.LastIndexOf(symbol, 0), TestStrings.ToIndexOfChars1.LastIndexOf(symbol, 0));
+                Assert.AreEqual(sb.LastIndexOf(symbol, 0), ToIndexOfChars1.LastIndexOf(symbol, 0));
             }
-            sb = new StringBuilder(TestStrings.ToIndexOfChars2);
-            foreach (char symbol in TestStrings.SymbolsToTrim)
+            sb = new StringBuilder(ToIndexOfChars2);
+            foreach (char symbol in SymbolsToTrim)
             {
-                Assert.AreEqual(sb.LastIndexOf(symbol, 0), TestStrings.ToIndexOfChars2.LastIndexOf(symbol, 0));
+                Assert.AreEqual(sb.LastIndexOf(symbol, 0), ToIndexOfChars2.LastIndexOf(symbol, 0));
             }
         }
 
@@ -91,8 +92,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.ToIndexOfChars1);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], sb.Length);
+                StringBuilder sb = new StringBuilder(ToIndexOfChars1);
+                sb.LastIndexOf(SymbolsToTrim[0], sb.Length);
             }
             );
         }
@@ -102,8 +103,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.ToIndexOfChars2);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], sb.Length);
+                StringBuilder sb = new StringBuilder(ToIndexOfChars2);
+                sb.LastIndexOf(SymbolsToTrim[0], sb.Length);
             }
             );
         }
@@ -113,8 +114,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], -1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.LastIndexOf(SymbolsToTrim[0], -1);
             }
             );
         }
@@ -124,8 +125,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], -1, 5);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.LastIndexOf(SymbolsToTrim[0], -1, 5);
             }
             );
         }
@@ -135,8 +136,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], sb.Length + 1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.LastIndexOf(SymbolsToTrim[0], sb.Length + 1);
             }
             );
         }
@@ -146,8 +147,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], sb.Length + 1, 5);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.LastIndexOf(SymbolsToTrim[0], sb.Length + 1, 5);
             }
             );
         }
@@ -157,8 +158,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], 0, -1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.LastIndexOf(SymbolsToTrim[0], 0, -1);
             }
             );
         }
@@ -168,8 +169,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], -1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.LastIndexOf(SymbolsToTrim[0], -1);
             }
             );
         }
@@ -179,8 +180,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], 0, sb.Length + 1);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.LastIndexOf(SymbolsToTrim[0], 0, sb.Length + 1);
             }
             );
         }
@@ -190,8 +191,8 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
-                sb.LastIndexOf(TestStrings.SymbolsToTrim[0], 15, 20);
+                StringBuilder sb = new StringBuilder(Composition1);
+                sb.LastIndexOf(SymbolsToTrim[0], 15, 20);
             }
             );
         }

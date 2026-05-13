@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using static System.Text.Tests.TestStrings;
 
 namespace System.Text.Tests
 {
@@ -9,27 +10,27 @@ namespace System.Text.Tests
         public void TestContainingCharacters()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingWhiteSpaces).Remove(' ');
-            Assert.AreEqual(sb.ToString(), TestStrings.WhiteSpacesRemoved);
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingSymbols).Remove(TestStrings.SymbolsToTrim);
-            Assert.AreEqual(sb.ToString(), TestStrings.SymbolsRemoved);
+            sb = new StringBuilder(LeadingAndTrailingWhiteSpaces).Remove(' ');
+            Assert.AreEqual(sb.ToString(), WhiteSpacesRemoved);
+            sb = new StringBuilder(LeadingAndTrailingSymbols).Remove(SymbolsToTrim);
+            Assert.AreEqual(sb.ToString(), SymbolsRemoved);
         }
 
         [Test]
         public void TestNotContainingCharacters()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingWhiteSpaces).Remove(TestStrings.SymbolsToTrim);
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingWhiteSpaces);
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingSymbols).Remove(' ');
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingSymbols);
+            sb = new StringBuilder(LeadingAndTrailingWhiteSpaces).Remove(SymbolsToTrim);
+            Assert.AreEqual(sb.ToString(), LeadingAndTrailingWhiteSpaces);
+            sb = new StringBuilder(LeadingAndTrailingSymbols).Remove(' ');
+            Assert.AreEqual(sb.ToString(), LeadingAndTrailingSymbols);
         }
 
         [Test]
         public void TestByStartIndex()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1 + TestStrings.Composition2).Remove(TestStrings.Composition1.Length);
-            Assert.AreEqual(sb.ToString(), TestStrings.Composition1);
+            StringBuilder sb = new StringBuilder(Composition1 + Composition2).Remove(Composition1.Length);
+            Assert.AreEqual(sb.ToString(), Composition1);
         }
 
         [Test]
@@ -42,15 +43,15 @@ namespace System.Text.Tests
         [Test]
         public void TestRemoveAllCharacters()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1).Remove(0);
+            StringBuilder sb = new StringBuilder(Composition1).Remove(0);
             Assert.AreEqual(sb.ToString(), string.Empty);
         }
 
         [Test]
         public void TestRemoveLastCharacter()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.Composition1).Remove(TestStrings.Composition1.Length - 1);
-            Assert.AreEqual(sb.ToString(), TestStrings.Composition1.Substring(0, TestStrings.Composition1.Length - 1));
+            StringBuilder sb = new StringBuilder(Composition1).Remove(Composition1.Length - 1);
+            Assert.AreEqual(sb.ToString(), Composition1.Substring(0, Composition1.Length - 1));
         }
 
         [Test]
@@ -58,7 +59,7 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1).Remove(-1);
+                StringBuilder sb = new StringBuilder(Composition1).Remove(-1);
             }
             );
         }
@@ -68,7 +69,7 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
-                StringBuilder sb = new StringBuilder(TestStrings.Composition1);
+                StringBuilder sb = new StringBuilder(Composition1);
                 sb.Remove(sb.Length);
             }
             );
@@ -79,7 +80,7 @@ namespace System.Text.Tests
         {
             Assert.Throws<ArgumentNullException>(() =>
             {
-                StringBuilder sb = new StringBuilder().Remove(null);
+                StringBuilder sb = new StringBuilder().Remove(Null);
             }
             );
         }

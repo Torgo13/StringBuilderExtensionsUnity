@@ -1,25 +1,26 @@
 ﻿using NUnit.Framework;
 using System.Globalization;
+using static System.Text.Tests.TestStrings;
 
 namespace System.Text.Tests
 {
     [TestFixture]
     public class EndsWithTests
     {
-        private static readonly string correctStringToSearch = string.Concat(TestStrings.Composition1, TestStrings.Searched, TestStrings.Composition2, TestStrings.Searched);
-        private static readonly string correctStringToSearchUpperCase = string.Concat(TestStrings.Composition1, TestStrings.Searched, TestStrings.Composition2, TestStrings.Searched.ToUpper());
-        private static readonly string incorrectStringToSearch1 = string.Concat(TestStrings.Composition1, TestStrings.Composition2, TestStrings.Searched, TestStrings.SingleCharacter);
-        private static readonly string incorrectStringToSearch2 = string.Concat(TestStrings.Composition1, TestStrings.Composition2);
-        private static readonly string smallStringToSearch = TestStrings.Composition1;
+        private static readonly string correctStringToSearch = string.Concat(Composition1, Searched, Composition2, Searched);
+        private static readonly string correctStringToSearchUpperCase = string.Concat(Composition1, Searched, Composition2, Searched.ToUpper());
+        private static readonly string incorrectStringToSearch1 = string.Concat(Composition1, Composition2, Searched, SingleCharacter);
+        private static readonly string incorrectStringToSearch2 = string.Concat(Composition1, Composition2);
+        private static readonly string smallStringToSearch = Composition1;
 
         [Test]
         public void TestContainingCharacters()
         {
             StringBuilder sb;
             sb = new StringBuilder(correctStringToSearch);
-            Assert.AreEqual(sb.EndsWith(TestStrings.Searched), correctStringToSearch.EndsWith(TestStrings.Searched));
-            sb = new StringBuilder(TestStrings.Searched);
-            Assert.AreEqual(sb.EndsWith(TestStrings.Searched), correctStringToSearch.EndsWith(TestStrings.Searched));
+            Assert.AreEqual(sb.EndsWith(Searched), correctStringToSearch.EndsWith(Searched));
+            sb = new StringBuilder(Searched);
+            Assert.AreEqual(sb.EndsWith(Searched), correctStringToSearch.EndsWith(Searched));
         }
 
         [Test]
@@ -27,9 +28,9 @@ namespace System.Text.Tests
         {
             StringBuilder sb;
             sb = new StringBuilder(correctStringToSearchUpperCase);
-            Assert.AreEqual(sb.EndsWith(TestStrings.Searched, true), correctStringToSearch.EndsWith(TestStrings.Searched, true, CultureInfo.CurrentCulture));
-            sb = new StringBuilder(TestStrings.Searched.ToUpper());
-            Assert.AreEqual(sb.EndsWith(TestStrings.Searched, true), correctStringToSearch.EndsWith(TestStrings.Searched, true, CultureInfo.CurrentCulture));
+            Assert.AreEqual(sb.EndsWith(Searched, true), correctStringToSearch.EndsWith(Searched, true, CultureInfo.CurrentCulture));
+            sb = new StringBuilder(Searched.ToUpper());
+            Assert.AreEqual(sb.EndsWith(Searched, true), correctStringToSearch.EndsWith(Searched, true, CultureInfo.CurrentCulture));
         }
 
         [Test]
@@ -37,9 +38,9 @@ namespace System.Text.Tests
         {
             StringBuilder sb;
             sb = new StringBuilder(incorrectStringToSearch1);
-            Assert.AreEqual(sb.EndsWith(TestStrings.Searched), incorrectStringToSearch1.EndsWith(TestStrings.Searched));
+            Assert.AreEqual(sb.EndsWith(Searched), incorrectStringToSearch1.EndsWith(Searched));
             sb = new StringBuilder(incorrectStringToSearch2);
-            Assert.AreEqual(sb.EndsWith(TestStrings.Searched), incorrectStringToSearch2.EndsWith(TestStrings.Searched));
+            Assert.AreEqual(sb.EndsWith(Searched), incorrectStringToSearch2.EndsWith(Searched));
         }
 
         [Test]
@@ -47,9 +48,9 @@ namespace System.Text.Tests
         {
             StringBuilder sb;
             sb = new StringBuilder(incorrectStringToSearch1);
-            Assert.AreEqual(sb.EndsWith(TestStrings.Searched, true), incorrectStringToSearch1.EndsWith(TestStrings.Searched, true, CultureInfo.CurrentCulture));
+            Assert.AreEqual(sb.EndsWith(Searched, true), incorrectStringToSearch1.EndsWith(Searched, true, CultureInfo.CurrentCulture));
             sb = new StringBuilder(incorrectStringToSearch2);
-            Assert.AreEqual(sb.EndsWith(TestStrings.Searched, true), incorrectStringToSearch2.EndsWith(TestStrings.Searched, true, CultureInfo.CurrentCulture));
+            Assert.AreEqual(sb.EndsWith(Searched, true), incorrectStringToSearch2.EndsWith(Searched, true, CultureInfo.CurrentCulture));
         }
 
         [Test]
@@ -58,7 +59,7 @@ namespace System.Text.Tests
             Assert.Throws<ArgumentNullException>(() =>
             {
                 StringBuilder sb = new StringBuilder();
-                sb.EndsWith(null);
+                sb.EndsWith(Null);
             }
             );
         }
@@ -74,14 +75,14 @@ namespace System.Text.Tests
         public void TestValueLengthGreaterThanStringBuilderLength()
         {
             StringBuilder sb = new StringBuilder(smallStringToSearch);
-            Assert.AreEqual(sb.EndsWith(TestStrings.Searched), smallStringToSearch.EndsWith(TestStrings.Searched));
+            Assert.AreEqual(sb.EndsWith(Searched), smallStringToSearch.EndsWith(Searched));
         }
 
         [Test]
         public void TestEmpty()
         {
             StringBuilder sb = new StringBuilder();
-            Assert.IsFalse(sb.EndsWith(TestStrings.Searched));
+            Assert.IsFalse(sb.EndsWith(Searched));
         }
     }
 }

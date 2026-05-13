@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using static System.Text.Tests.TestStrings;
 
 namespace System.Text.Tests
 {
@@ -9,64 +10,65 @@ namespace System.Text.Tests
         public void TestContainingWhiteSpaces()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.LeadingWhiteSpaces).TrimStart();
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingWhiteSpaces.TrimStart());
-            sb = new StringBuilder(TestStrings.TrailingWhiteSpaces).TrimStart();
-            Assert.AreEqual(sb.ToString(), TestStrings.TrailingWhiteSpaces.TrimStart());
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingWhiteSpaces).TrimStart();
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingWhiteSpaces.TrimStart());
+            sb = new StringBuilder(LeadingWhiteSpaces).TrimStart();
+            Assert.AreEqual(sb.ToString(), LeadingWhiteSpaces.TrimStart());
+            sb = new StringBuilder(TrailingWhiteSpaces).TrimStart();
+            Assert.AreEqual(sb.ToString(), TrailingWhiteSpaces.TrimStart());
+            sb = new StringBuilder(LeadingAndTrailingWhiteSpaces).TrimStart();
+            Assert.AreEqual(sb.ToString(), LeadingAndTrailingWhiteSpaces.TrimStart());
         }
 
         [Test]
         public void TestContainingWhiteSpacesNullTrimChars()
         {
+            char[] nullTrimChars = null;
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.LeadingWhiteSpaces).TrimStart(null);
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingWhiteSpaces.TrimStart(null));
-            sb = new StringBuilder(TestStrings.TrailingWhiteSpaces).TrimStart(null);
-            Assert.AreEqual(sb.ToString(), TestStrings.TrailingWhiteSpaces.TrimStart(null));
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingWhiteSpaces).TrimStart(null);
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingWhiteSpaces.TrimStart(null));
+            sb = new StringBuilder(LeadingWhiteSpaces).TrimStart(nullTrimChars);
+            Assert.AreEqual(sb.ToString(), LeadingWhiteSpaces.TrimStart(nullTrimChars));
+            sb = new StringBuilder(TrailingWhiteSpaces).TrimStart(nullTrimChars);
+            Assert.AreEqual(sb.ToString(), TrailingWhiteSpaces.TrimStart(nullTrimChars));
+            sb = new StringBuilder(LeadingAndTrailingWhiteSpaces).TrimStart(nullTrimChars);
+            Assert.AreEqual(sb.ToString(), LeadingAndTrailingWhiteSpaces.TrimStart(nullTrimChars));
         }
 
         [Test]
         public void TestContainingWhiteSpacesEmptyTrimChars()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.LeadingWhiteSpaces).TrimStart(new char[] { });
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingWhiteSpaces.TrimStart(new char[] { }));
-            sb = new StringBuilder(TestStrings.TrailingWhiteSpaces).TrimStart(new char[] { });
-            Assert.AreEqual(sb.ToString(), TestStrings.TrailingWhiteSpaces.TrimStart(new char[] { }));
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingWhiteSpaces).TrimStart(new char[] { });
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingWhiteSpaces.TrimStart(new char[] { }));
+            sb = new StringBuilder(LeadingWhiteSpaces).TrimStart(new char[] { });
+            Assert.AreEqual(sb.ToString(), LeadingWhiteSpaces.TrimStart(new char[] { }));
+            sb = new StringBuilder(TrailingWhiteSpaces).TrimStart(new char[] { });
+            Assert.AreEqual(sb.ToString(), TrailingWhiteSpaces.TrimStart(new char[] { }));
+            sb = new StringBuilder(LeadingAndTrailingWhiteSpaces).TrimStart(new char[] { });
+            Assert.AreEqual(sb.ToString(), LeadingAndTrailingWhiteSpaces.TrimStart(new char[] { }));
         }
 
         [Test]
         public void TestNotContainingWhiteSpaces()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.WhiteSpacesTrimmed).TrimStart();
-            Assert.AreEqual(sb.ToString(), TestStrings.WhiteSpacesTrimmed);
+            sb = new StringBuilder(WhiteSpacesTrimmed).TrimStart();
+            Assert.AreEqual(sb.ToString(), WhiteSpacesTrimmed);
         }
 
         [Test]
         public void TestContainingCharacters()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.LeadingSymbols).TrimStart(TestStrings.SymbolsToTrim);
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingSymbols.TrimStart(TestStrings.SymbolsToTrim));
-            sb = new StringBuilder(TestStrings.TrailingSymbols).TrimStart(TestStrings.SymbolsToTrim);
-            Assert.AreEqual(sb.ToString(), TestStrings.TrailingSymbols.TrimStart(TestStrings.SymbolsToTrim));
-            sb = new StringBuilder(TestStrings.LeadingAndTrailingSymbols).TrimStart(TestStrings.SymbolsToTrim);
-            Assert.AreEqual(sb.ToString(), TestStrings.LeadingAndTrailingSymbols.TrimStart(TestStrings.SymbolsToTrim));
+            sb = new StringBuilder(LeadingSymbols).TrimStart(SymbolsToTrim);
+            Assert.AreEqual(sb.ToString(), LeadingSymbols.TrimStart(SymbolsToTrim));
+            sb = new StringBuilder(TrailingSymbols).TrimStart(SymbolsToTrim);
+            Assert.AreEqual(sb.ToString(), TrailingSymbols.TrimStart(SymbolsToTrim));
+            sb = new StringBuilder(LeadingAndTrailingSymbols).TrimStart(SymbolsToTrim);
+            Assert.AreEqual(sb.ToString(), LeadingAndTrailingSymbols.TrimStart(SymbolsToTrim));
         }
 
         [Test]
         public void TestNotContainingCharacters()
         {
             StringBuilder sb;
-            sb = new StringBuilder(TestStrings.SymbolsTrimmed).TrimStart(TestStrings.SymbolsToTrim);
-            Assert.AreEqual(sb.ToString(), TestStrings.SymbolsTrimmed);
+            sb = new StringBuilder(SymbolsTrimmed).TrimStart(SymbolsToTrim);
+            Assert.AreEqual(sb.ToString(), SymbolsTrimmed);
         }
 
         [Test]
@@ -80,7 +82,7 @@ namespace System.Text.Tests
         [Test]
         public void TrimWhiteSpaces()
         {
-            StringBuilder sb = new StringBuilder(TestStrings.WhiteSpaces).TrimStart();
+            StringBuilder sb = new StringBuilder(WhiteSpaces).TrimStart();
             Assert.AreEqual(sb.ToString(), string.Empty);
         }
     }
