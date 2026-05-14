@@ -61,12 +61,12 @@ namespace System.Text
 
         #region Remove
         /// <summary>
-        /// Removes all occurrences of specified characters from <see cref="StringBuilder"/>.
+        /// Removes all occurrences of specified characters from the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="removeChar">A Unicode character to remove.</param>
         /// <returns>
-        /// Returns <see cref="StringBuilder"/> without specified Unicode characters.
+        /// Returns the <see cref="StringBuilder"/> without specified Unicode characters.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="sb"/> is null.</exception>
         public static StringBuilder Remove(this StringBuilder sb, char removeChar)
@@ -86,12 +86,12 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Removes all occurrences of specified characters from <see cref="StringBuilder"/>.
+        /// Removes all occurrences of specified characters from the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="removeChars">Unicode characters to remove.</param>
         /// <returns>
-        /// Returns <see cref="StringBuilder"/> without specified Unicode characters.
+        /// Returns the <see cref="StringBuilder"/> without specified Unicode characters.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="removeChars"/> is null.</exception>
         public static StringBuilder Remove(this StringBuilder sb, params char[] removeChars)
@@ -119,6 +119,13 @@ namespace System.Text
         }
 
         /// <inheritdoc cref="Remove(StringBuilder, char[])"/>
+        public static StringBuilder Remove(this StringBuilder sb, ReadOnlySpan<string> removeChars)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(removeChars);
+            return sb.Remove(borrowedSpan.Value);
+        }
+
+        /// <inheritdoc cref="Remove(StringBuilder, char[])"/>
         public static StringBuilder Remove(this StringBuilder sb, StringBuilder removeChars)
         {
             if (sb == null)
@@ -138,7 +145,7 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Removes the range of characters from the specified index to the end of <see cref="StringBuilder"/>.
+        /// Removes the range of characters from the specified index to the end of the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="startIndex">The zero-based position to begin deleting characters.</param>
@@ -341,12 +348,12 @@ namespace System.Text
         #region TrimStart
         /// <summary>
         /// Removes all leading occurrences of a set of characters specified in an array 
-        /// from the current <see cref="StringBuilder"/> object.
+        /// from the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="trimChars">An array of Unicode characters to remove, or null.</param>
         /// <returns>
-        /// The <see cref="StringBuilder"/> object that contains a list of characters 
+        /// The <see cref="StringBuilder"/> that contains a list of characters 
         /// that remains after all occurrences of the characters in the <paramref name="trimChars"/> parameter 
         /// are removed from the end of the current string. If <paramref name="trimChars"/> is null or an empty array, 
         /// Unicode white-space characters are removed instead.
@@ -368,6 +375,13 @@ namespace System.Text
         }
 
         /// <inheritdoc cref="TrimStart(StringBuilder, char[])"/>
+        public static StringBuilder TrimStart(this StringBuilder sb, ReadOnlySpan<string> trimChars)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(trimChars);
+            return sb.TrimStart(borrowedSpan.Value);
+        }
+
+        /// <inheritdoc cref="TrimStart(StringBuilder, char[])"/>
         public static StringBuilder TrimStart(this StringBuilder sb, StringBuilder trimChars)
         {
             if (sb == null)
@@ -382,12 +396,12 @@ namespace System.Text
         #region TrimEnd
         /// <summary>
         /// Removes all trailing occurrences of a set of characters specified in an array 
-        /// from the current <see cref="StringBuilder"/> object.
+        /// from the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="trimChars">An array of Unicode characters to remove, or null.</param>
         /// <returns>
-        /// The <see cref="StringBuilder"/> object that contains a list of characters that remains 
+        /// The <see cref="StringBuilder"/> that contains a list of characters that remains 
         /// after all occurrences of the characters in the <paramref name="trimChars"/> parameter are removed 
         /// from the end of the current string. If <paramref name="trimChars"/> is null or an empty array, 
         /// Unicode white-space characters are removed instead.
@@ -409,6 +423,13 @@ namespace System.Text
         }
 
         /// <inheritdoc cref="TrimEnd(StringBuilder, char[])"/>
+        public static StringBuilder TrimEnd(this StringBuilder sb, ReadOnlySpan<string> trimChars)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(trimChars);
+            return sb.TrimEnd(borrowedSpan.Value);
+        }
+
+        /// <inheritdoc cref="TrimEnd(StringBuilder, char[])"/>
         public static StringBuilder TrimEnd(this StringBuilder sb, StringBuilder trimChars)
         {
             if (sb == null)
@@ -422,11 +443,11 @@ namespace System.Text
 
         #region Trim
         /// <summary>
-        /// Removes all leading and trailing white-space characters from the current <see cref="StringBuilder"/> object.
+        /// Removes all leading and trailing white-space characters from the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <returns>
-        /// The <see cref="StringBuilder"/> object that contains a list of characters 
+        /// The <see cref="StringBuilder"/> that contains a list of characters 
         /// that remains after all white-space characters are removed 
         /// from the start and end of the current StringBuilder.
         /// </returns>
@@ -440,12 +461,12 @@ namespace System.Text
 
         /// <summary>
         /// Removes all leading and trailing occurrences of a set of characters specified in an array
-        /// from the current <see cref="StringBuilder"/> object.
+        /// from the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <param name="trimChars">An array of Unicode characters to remove, or null.</param>
         /// <returns>
-        /// The <see cref="StringBuilder"/> object that contains a list of characters that remains 
+        /// The <see cref="StringBuilder"/> that contains a list of characters that remains 
         /// after all occurrences of the characters in the <paramref name="trimChars"/> parameter are removed 
         /// from the end of the current StringBuilder. If <paramref name="trimChars"/> is null or an empty array, 
         /// Unicode white-space characters are removed instead.
@@ -464,6 +485,13 @@ namespace System.Text
             return trimChars != null && trimChars.Length != 0
                 ? sb.TrimHelper(trimChars, 2)
                 : sb.TrimHelper(2);
+        }
+
+        /// <inheritdoc cref="Trim(StringBuilder, char[])"/>
+        public static StringBuilder Trim(this StringBuilder sb, ReadOnlySpan<string> trimChars)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(trimChars);
+            return sb.Trim(borrowedSpan.Value);
         }
 
         /// <inheritdoc cref="Trim(StringBuilder, char[])"/>
@@ -569,7 +597,7 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="StringBuilder"/> object.
+        /// Reports the zero-based index of the first occurrence of the specified string in the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek.</param>
@@ -594,6 +622,13 @@ namespace System.Text
         }
 
         /// <inheritdoc cref="IndexOf(StringBuilder, ReadOnlySpan{char}, bool)"/>
+        public static int IndexOf(this StringBuilder sb, ReadOnlySpan<string> value, bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.IndexOf(borrowedSpan.Value, ignoreCase);
+        }
+
+        /// <inheritdoc cref="IndexOf(StringBuilder, ReadOnlySpan{char}, bool)"/>
         public static int IndexOf(this StringBuilder sb, StringBuilder value, bool ignoreCase = false)
         {
             if (sb == null)
@@ -608,8 +643,8 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="StringBuilder"/> object. 
-        /// Parameter specifies the starting search position in the current <see cref="StringBuilder"/>.
+        /// Reports the zero-based index of the first occurrence of the specified string in the <see cref="StringBuilder"/>. 
+        /// Parameter specifies the starting search position in the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek. </param>
@@ -639,6 +674,13 @@ namespace System.Text
         }
 
         /// <inheritdoc cref="IndexOf(StringBuilder, ReadOnlySpan{char}, int, bool)"/>
+        public static int IndexOf(this StringBuilder sb, ReadOnlySpan<string> value, int startIndex, bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.IndexOf(borrowedSpan.Value, startIndex, ignoreCase);
+        }
+
+        /// <inheritdoc cref="IndexOf(StringBuilder, ReadOnlySpan{char}, int, bool)"/>
         public static int IndexOf(this StringBuilder sb, StringBuilder value, int startIndex, bool ignoreCase = false)
         {
             if (sb == null)
@@ -654,7 +696,7 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Reports the zero-based index of the first occurrence of the specified string in the current <see cref="StringBuilder"/> object. 
+        /// Reports the zero-based index of the first occurrence of the specified string in the <see cref="StringBuilder"/>. 
         /// The search starts at a specified character position and examines a specified number of character positions.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
@@ -687,6 +729,13 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
 
             return IndexOfInternal(sb, value, startIndex, count, ignoreCase);
+        }
+
+        /// <inheritdoc cref="IndexOf(StringBuilder, ReadOnlySpan{char}, int, int, bool)"/>
+        public static int IndexOf(this StringBuilder sb, ReadOnlySpan<string> value, int startIndex, int count, bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.IndexOf(borrowedSpan.Value, startIndex, count, ignoreCase);
         }
 
         /// <inheritdoc cref="IndexOf(StringBuilder, ReadOnlySpan{char}, int, int, bool)"/>
@@ -832,6 +881,13 @@ namespace System.Text
         }
 
         /// <inheritdoc cref="IndexOfAny(StringBuilder, ReadOnlySpan{char})"/>
+        public static int IndexOfAny(this StringBuilder sb, ReadOnlySpan<string> anyOf)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(anyOf);
+            return sb.IndexOfAny(borrowedSpan.Value);
+        }
+
+        /// <inheritdoc cref="IndexOfAny(StringBuilder, ReadOnlySpan{char})"/>
         public static int IndexOfAny(this StringBuilder sb, StringBuilder anyOf)
         {
             if (sb == null)
@@ -866,6 +922,13 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
 
             return sb.IndexOfAny(anyOf, startIndex, sb.Length - startIndex);
+        }
+
+        /// <inheritdoc cref="IndexOfAny(StringBuilder, ReadOnlySpan{char}, int)"/>
+        public static int IndexOfAny(this StringBuilder sb, ReadOnlySpan<string> anyOf, int startIndex)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(anyOf);
+            return sb.IndexOfAny(borrowedSpan.Value, startIndex);
         }
 
         /// <inheritdoc cref="IndexOfAny(StringBuilder, ReadOnlySpan{char}, int)"/>
@@ -925,6 +988,13 @@ namespace System.Text
             }
 
             return -1;
+        }
+
+        /// <inheritdoc cref="IndexOfAny(StringBuilder, ReadOnlySpan{char}, int, int)"/>
+        public static int IndexOfAny(this StringBuilder sb, ReadOnlySpan<string> anyOf, int startIndex, int count)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(anyOf);
+            return sb.IndexOfAny(borrowedSpan.Value, startIndex, count);
         }
 
         /// <inheritdoc cref="IndexOfAny(StringBuilder, ReadOnlySpan{char}, int, int)"/>
@@ -1055,7 +1125,7 @@ namespace System.Text
 
         /// <summary>
         /// Reports the zero-based index of the last occurrence of the specified string 
-        /// in the current <see cref="StringBuilder"/> object.
+        /// in the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek.</param>
@@ -1087,6 +1157,13 @@ namespace System.Text
         }
 
         /// <inheritdoc cref="LastIndexOf(StringBuilder, ReadOnlySpan{char}, bool)"/>
+        public static int LastIndexOf(this StringBuilder sb, ReadOnlySpan<string> value, bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.LastIndexOf(borrowedSpan.Value, ignoreCase);
+        }
+
+        /// <inheritdoc cref="LastIndexOf(StringBuilder, ReadOnlySpan{char}, bool)"/>
         public static int LastIndexOf(this StringBuilder sb, StringBuilder value, bool ignoreCase = false)
         {
             if (sb == null)
@@ -1109,8 +1186,8 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Reports the zero-based index of the last occurrence of the specified string in the current <see cref="StringBuilder"/> object. 
-        /// Parameter specifies the starting search position in the current <see cref="StringBuilder"/>.
+        /// Reports the zero-based index of the last occurrence of the specified string in the <see cref="StringBuilder"/>. 
+        /// Parameter specifies the starting search position in the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
         /// <param name="value">The string to seek. </param>
@@ -1135,6 +1212,13 @@ namespace System.Text
         }
 
         /// <inheritdoc cref="LastIndexOf(StringBuilder, ReadOnlySpan{char}, int, bool)"/>
+        public static int LastIndexOf(this StringBuilder sb, ReadOnlySpan<string> value, int startIndex, bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.LastIndexOf(borrowedSpan.Value, startIndex, ignoreCase);
+        }
+
+        /// <inheritdoc cref="LastIndexOf(StringBuilder, ReadOnlySpan{char}, int, bool)"/>
         public static int LastIndexOf(this StringBuilder sb, StringBuilder value, int startIndex, bool ignoreCase = false)
         {
             if (sb == null)
@@ -1150,7 +1234,7 @@ namespace System.Text
         }
 
         /// <summary>
-        /// Reports the zero-based index of the last occurrence of the specified string in the current <see cref="StringBuilder"/> object. 
+        /// Reports the zero-based index of the last occurrence of the specified string in the <see cref="StringBuilder"/>. 
         /// The search starts at a specified character position and examines a specified number of character positions.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to search.</param>
@@ -1182,6 +1266,13 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
 
             return LastIndexOfInternal(sb, value, startIndex, count, ignoreCase);
+        }
+
+        /// <inheritdoc cref="LastIndexOf(StringBuilder, ReadOnlySpan{char}, int, int, bool)"/>
+        public static int LastIndexOf(this StringBuilder sb, ReadOnlySpan<string> value, int startIndex, int count, bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.LastIndexOf(borrowedSpan.Value, startIndex, count, ignoreCase);
         }
 
         /// <inheritdoc cref="LastIndexOf(StringBuilder, ReadOnlySpan{char}, int, int, bool)"/>
@@ -1331,6 +1422,13 @@ namespace System.Text
         }
 
         /// <inheritdoc cref="LastIndexOfAny(StringBuilder, ReadOnlySpan{char})"/>
+        public static int LastIndexOfAny(this StringBuilder sb, ReadOnlySpan<string> anyOf)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(anyOf);
+            return sb.LastIndexOfAny(borrowedSpan.Value);
+        }
+
+        /// <inheritdoc cref="LastIndexOfAny(StringBuilder, ReadOnlySpan{char})"/>
         public static int LastIndexOfAny(this StringBuilder sb, StringBuilder anyOf)
         {
             if (sb == null)
@@ -1365,6 +1463,13 @@ namespace System.Text
                 throw new ArgumentOutOfRangeException();
 
             return sb.LastIndexOfAny(anyOf, startIndex, startIndex + 1);
+        }
+
+        /// <inheritdoc cref="LastIndexOfAny(StringBuilder, ReadOnlySpan{char}, int)"/>
+        public static int LastIndexOfAny(this StringBuilder sb, ReadOnlySpan<string> anyOf, int startIndex)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(anyOf);
+            return sb.LastIndexOfAny(borrowedSpan.Value, startIndex);
         }
 
         /// <inheritdoc cref="LastIndexOfAny(StringBuilder, ReadOnlySpan{char}, int)"/>
@@ -1424,6 +1529,13 @@ namespace System.Text
             }
 
             return -1;
+        }
+
+        /// <inheritdoc cref="LastIndexOfAny(StringBuilder, ReadOnlySpan{char}, int, int)"/>
+        public static int LastIndexOfAny(this StringBuilder sb, ReadOnlySpan<string> anyOf, int startIndex, int count)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(anyOf);
+            return sb.LastIndexOfAny(borrowedSpan.Value, startIndex, count);
         }
 
         /// <inheritdoc cref="LastIndexOfAny(StringBuilder, ReadOnlySpan{char}, int, int)"/>
@@ -1501,6 +1613,13 @@ namespace System.Text
             }
 
             return true;
+        }
+
+        /// <inheritdoc cref="StartsWith(StringBuilder, ReadOnlySpan{char}, bool)"/>
+        public static bool StartsWith(this StringBuilder sb, ReadOnlySpan<string> value, bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.StartsWith(borrowedSpan.Value, ignoreCase);
         }
 
         /// <inheritdoc cref="StartsWith(StringBuilder, ReadOnlySpan{char}, bool)"/>
@@ -1586,6 +1705,13 @@ namespace System.Text
             }
 
             return true;
+        }
+
+        /// <inheritdoc cref="EndsWith(StringBuilder, ReadOnlySpan{char}, bool)"/>
+        public static bool EndsWith(this StringBuilder sb, ReadOnlySpan<string> value, bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.EndsWith(borrowedSpan.Value, ignoreCase);
         }
 
         /// <inheritdoc cref="EndsWith(StringBuilder, ReadOnlySpan{char}, bool)"/>
@@ -1732,11 +1858,11 @@ namespace System.Text
         #endregion // ToUpper
 
         /// <summary>
-        /// Removes all whitespace from <see cref="StringBuilder"/>.
+        /// Removes all whitespace from the <see cref="StringBuilder"/>.
         /// </summary>
         /// <param name="sb">A <see cref="StringBuilder"/> to remove from.</param>
         /// <returns>
-        /// Returns <see cref="StringBuilder"/> without whitespace.
+        /// Returns the <see cref="StringBuilder"/> without whitespace.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="sb"/> is null.</exception>
         public static StringBuilder RemoveWhiteSpace(this StringBuilder sb)
@@ -1757,6 +1883,12 @@ namespace System.Text
 
         #region Replace
         public static StringBuilder Replace(this StringBuilder sb, ReadOnlySpan<char> oldValue, ReadOnlySpan<char> newValue,
+            StringComparison comparisonType)
+        {
+            return sb.Replace(oldValue, newValue, IgnoreCase(comparisonType));
+        }
+
+        public static StringBuilder Replace(this StringBuilder sb, ReadOnlySpan<string> oldValue, ReadOnlySpan<string> newValue,
             StringComparison comparisonType)
         {
             return sb.Replace(oldValue, newValue, IgnoreCase(comparisonType));
@@ -1787,6 +1919,14 @@ namespace System.Text
             return sb;
         }
 
+        public static StringBuilder Replace(this StringBuilder sb, ReadOnlySpan<string> oldValue, ReadOnlySpan<string> newValue,
+            bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan0 = new BorrowedSpan(oldValue);
+            using BorrowedSpan borrowedSpan1 = new BorrowedSpan(newValue);
+            return sb.Replace(borrowedSpan0.Value, borrowedSpan1.Value, ignoreCase);
+        }
+
         public static StringBuilder Replace(this StringBuilder sb, ReadOnlySpan<char> oldValue, long newValue,
             bool ignoreCase = false)
         {
@@ -1807,6 +1947,13 @@ namespace System.Text
             }
 
             return sb;
+        }
+
+        public static StringBuilder Replace(this StringBuilder sb, ReadOnlySpan<string> oldValue, long newValue,
+            bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(oldValue);
+            return sb.Replace(borrowedSpan.Value, newValue, ignoreCase);
         }
 
         public static StringBuilder Replace(this StringBuilder sb, StringBuilder oldValue, long newValue,
@@ -1873,6 +2020,13 @@ namespace System.Text
             return sb;
         }
 
+        public static StringBuilder Replace(this StringBuilder sb, ReadOnlySpan<string> oldValue, StringBuilder newValue,
+            bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(oldValue);
+            return sb.Replace(borrowedSpan.Value, newValue, ignoreCase);
+        }
+
         public static StringBuilder Replace(this StringBuilder sb, StringBuilder oldValue, ReadOnlySpan<char> newValue,
             bool ignoreCase = false)
         {
@@ -1892,6 +2046,13 @@ namespace System.Text
             }
 
             return sb;
+        }
+
+        public static StringBuilder Replace(this StringBuilder sb, StringBuilder oldValue, ReadOnlySpan<string> newValue,
+            bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(newValue);
+            return sb.Replace(oldValue, borrowedSpan.Value, ignoreCase);
         }
         #endregion // Replace
 
@@ -1929,6 +2090,12 @@ namespace System.Text
             }
 
             return sb;
+        }
+
+        public static StringBuilder Insert(this StringBuilder sb, int index, ReadOnlySpan<string> value)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.Insert(index, borrowedSpan.Value);
         }
 
         public static StringBuilder Replace(this StringBuilder sb, int index, int length, StringBuilder value)
@@ -1981,6 +2148,12 @@ namespace System.Text
             return sb;
         }
 
+        public static StringBuilder Replace(this StringBuilder sb, int index, int length, ReadOnlySpan<string> value)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.Replace(index, length, borrowedSpan.Value);
+        }
+
         public static StringBuilder EnsureRoom(this StringBuilder sb, int room)
         {
             if (sb == null)
@@ -2009,6 +2182,12 @@ namespace System.Text
             return sb.IndexOf(value, IgnoreCase(comparisonType)) >= 0;
         }
 
+        public static bool Contains(this StringBuilder sb, ReadOnlySpan<string> value,
+            StringComparison comparisonType)
+        {
+            return sb.Contains(value, IgnoreCase(comparisonType));
+        }
+
         public static bool Contains(this StringBuilder sb, StringBuilder value,
             StringComparison comparisonType)
         {
@@ -2023,6 +2202,13 @@ namespace System.Text
             return sb.IndexOf(value, ignoreCase) >= 0;
         }
 
+        public static bool Contains(this StringBuilder sb, ReadOnlySpan<string> value,
+            bool ignoreCase = false)
+        {
+            using BorrowedSpan borrowedSpan = new BorrowedSpan(value);
+            return sb.IndexOf(borrowedSpan.Value, ignoreCase) >= 0;
+        }
+
         public static bool Contains(this StringBuilder sb, StringBuilder value,
             bool ignoreCase = false)
         {
@@ -2035,5 +2221,55 @@ namespace System.Text
             return sb.IndexOf(value) >= 0;
         }
         #endregion // Contains
+
+        readonly struct BorrowedSpan : IDisposable
+        {
+#if UNITY_2022_3_OR_NEWER
+            private readonly Unity.Collections.NativeArray<char> _value;
+#else
+            private readonly char[] _buffer;
+            private readonly int _length;
+            private Span<char> _value => _buffer.AsSpan(start: 0, _length);
+#endif // UNITY_2022_3_OR_NEWER
+
+            public BorrowedSpan(ReadOnlySpan<string> values)
+            {
+                int length = 0;
+                foreach (string s in values)
+                {
+                    length += s?.Length ?? 0;
+                }
+
+#if UNITY_2022_3_OR_NEWER
+                _value = new Unity.Collections.NativeArray<char>(length,
+                    Unity.Collections.Allocator.Temp,
+                    Unity.Collections.NativeArrayOptions.UninitializedMemory);
+#else
+                _buffer = Buffers.ArrayPool<char>.Shared.Rent(length);
+                _length = length;
+#endif // UNITY_2022_3_OR_NEWER
+
+                int start = 0;
+                foreach (string s in values)
+                {
+                    if (s == null)
+                        continue;
+
+                    s.AsSpan().CopyTo(Value.Slice(start, s.Length));
+                    start += s.Length;
+                }
+            }
+
+            public Span<char> Value => _value;
+
+            public void Dispose()
+            {
+#if UNITY_2022_3_OR_NEWER
+                _value.Dispose();
+#else
+                Buffers.ArrayPool<char>.Shared.Return(_buffer);
+#endif // UNITY_2022_3_OR_NEWER
+            }
+        }
     }
 }
